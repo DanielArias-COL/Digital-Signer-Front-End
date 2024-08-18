@@ -1,0 +1,103 @@
+.home-container {
+    position: relative;
+    z-index: -1;
+    width: 100%;
+    height: 100vh;
+}
+
+.content-header{
+    height: 45%;
+}
+.content-products{
+    height: 50%;
+}
+
+.background-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center 80px;
+    z-index: -2;
+}
+
+.background-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(to bottom, #f83775 85%, transparent);
+    z-index: -1;
+}
+
+.content-brand {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+}
+
+.content-sale {
+    width: 20%;
+    height: 80px;
+    min-width: 250px;
+    max-width: 250px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    justify-content: space-around;
+    background-color: #ffff;
+    text-align: center;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.business-name {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 5px;
+
+}
+
+.title-sale {
+    font-size: 20px;
+    font-weight: bold;
+    color: #3e59e2;
+}
+
+.sale {
+    font-size: 2rem;
+    font-weight: bolder;
+    color: #f13474;
+}
+
+.content-buttons-sale {
+    display: flex;
+    justify-content: center;
+}
+
+.buttons-action-sale {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    width: 100px;
+}
+.buttons-action-sale:first-child {
+    margin-right: 20px;
+}
+
+.buttons-image{
+    height: 80px;
+    position: relative;
+    left: 16px;
+    margin-bottom: 5px;
+}
