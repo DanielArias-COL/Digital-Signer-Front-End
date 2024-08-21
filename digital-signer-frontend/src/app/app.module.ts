@@ -8,7 +8,7 @@ import { SpinnerComponent } from "./directives/spinner/spinner.component";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { HttpRequestInterceptor } from "./interceptors/http-request.interceptor";
 import { SelectivePreload } from "./directives/preload/selective-preload";
-import { BilleteraMarcaBlancaService } from "./modules/billetera-marca-blanca.service";
+import { DigitalSignerService } from "./modules/digital-signer.service";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
@@ -37,7 +37,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
       multi: true,
     },
     SelectivePreload,
-    BilleteraMarcaBlancaService,
+    DigitalSignerService,
     provideAnimationsAsync(),
   ],
   bootstrap: [AppComponent],

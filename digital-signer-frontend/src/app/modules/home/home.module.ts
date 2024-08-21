@@ -3,6 +3,7 @@ import { RouterModule } from "@angular/router";
 import { ReactiveFormsModule } from "@angular/forms";
 import { HomeComponent } from "./home-component/home.component";
 import { SharedCommonModule } from "../shared/shared-common.module";
+import { ToastModule } from 'primeng/toast';
 
 /**
  * Modulo para la autenticacion del sistema
@@ -17,6 +18,7 @@ import { SharedCommonModule } from "../shared/shared-common.module";
     ]),
     SharedCommonModule,
     ReactiveFormsModule,
+    ToastModule
   ],
   declarations: [HomeComponent],
 })

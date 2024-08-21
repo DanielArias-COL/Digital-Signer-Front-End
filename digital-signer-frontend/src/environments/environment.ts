@@ -1,3 +1,3 @@
 export const environment = {
-  serverBilleteraMarcaBlancaUrlLocal: "http://localhost:9078/"
+  serverUrlLocal: "http://localhost:9078/"
 };
