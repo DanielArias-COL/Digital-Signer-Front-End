@@ -20,6 +20,14 @@ import { ToastModule } from 'primeng/toast';
         data: { preload: true },
         loadChildren: () =>
           import("../principal/principal.module").then((m) => m.PrincipalModule),
+        
+      },
+      {
+        path: "register",
+        data: { preload: true },
+        loadChildren: () =>
+          import("../create-user/create-user.module").then((m) => m.CreateUserModule),
+        
       }
     ]),
     SharedCommonModule,

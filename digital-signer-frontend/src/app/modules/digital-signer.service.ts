@@ -19,4 +19,10 @@ export class DigitalSignerService {
   public iniciarSesion(request: SingInRequestDTO): Observable<any> {
     return this.http.post<any>(HomeAPIConstant.URL_SING_IN, request);
   }
+
+  public createUser(request: SingInRequestDTO): Observable<any> {
+    return this.http.post<any>(HomeAPIConstant.URL_CREATE_USER, request);
+  }
+
+
 }

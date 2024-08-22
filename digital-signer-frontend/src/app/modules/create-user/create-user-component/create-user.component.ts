@@ -1,20 +1,24 @@
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { DigitalSignerService } from "../../digital-signer.service";
-import { NgForm } from "@angular/forms";
 import { MessageService } from "primeng/api";
-import { SingInRequestDTO } from "../dto/sing-in-request.dto";
+import { NgForm } from "@angular/forms";
+import { RegisterRequestDTO } from "../dto-cu/create-user.dto";
 
 @Component({
-  templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.css"],
-  providers: [DigitalSignerService, MessageService],
+  templateUrl: "./create-user.component.html",
+  styleUrls: ["./create-user.component.css"],
+  providers: [DigitalSignerService, MessageService],// especifica los servisio que va usar el componente , ademas usamos messagueService para mostrar mensajes en la aplicación
 })
-export class HomeComponent implements OnInit {
+export class CreateUserComponent implements OnInit {
 
+  
   public usuario: string = "";
   public clave: string = "";
+  public clave_repetida: string = "";
   public msjError: string = "";
+
+
 
   constructor(
     private router: Router,
@@ -31,7 +35,7 @@ export class HomeComponent implements OnInit {
 
   public onSubmit(form: NgForm) {
     if (this.beforeIniciarSesion() && form.form.valid) {
-      this.iniciarSesion();
+      this.crearUsuario();
     }
   }
 
@@ -49,13 +53,20 @@ export class HomeComponent implements OnInit {
     return true;
   }
 
-  public iniciarSesion(): void {
+
+
+  public crearUsuario(): void {
     
     if (
       this.usuario &&
-      this.clave
+      this.clave &&
+      this.clave_repetida
     ) {
-      let request: SingInRequestDTO = new SingInRequestDTO();
+
+
+      
+
+      let request: RegisterRequestDTO = new RegisterRequestDTO();
       request.user = this.usuario;
       request.password = this.clave;
       this.BilleteraMarcaBlancaService
@@ -82,23 +93,6 @@ export class HomeComponent implements OnInit {
         summary: this.msjError,
       });
     }
-  }
-
-  public crearKeys() {
-    this.BilleteraMarcaBlancaService.generateKeys().subscribe(res => {
-      console.log(res);
-    })
-  }
-
-  public crearCuenta() {
-
     
-    this.navigateTo("home/register");
-      
-    
-  }
-
-  public habilitarOlvidoPassword() {
-
   }
 }

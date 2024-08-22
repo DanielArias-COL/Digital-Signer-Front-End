@@ -1,0 +1,96 @@
+<!-- panel principal -->
+<div class="pnl-1">
+
+    <div class="pnl-2">
+        <!-- panel imagen -->
+      <div class="img-login">
+        <img src="assets/login/logo-login@3x.png" srcset="assets/register/register.jfif" class="logo-login"/>
+      </div>
+
+      <!-- formulario ingreso informacion -->
+      <form
+      #formLogin="ngForm" name="formLogin"
+      novalidate>
+      
+      <!-- panel ingreso informacion -->
+      <div class="ui-g container">
+
+      
+      <!-- titulo -->
+      <div class="grid subtitle">
+        <p class="mb-0 font-size-16 subtitulo-color">Registrar Usuario</p>
+      </div>  
+
+        <!-- nombre usuario -->
+      <div class="grid mt-3 input-form">
+        <div class="inner-addon left-addon">
+          <i class="fa fa-user font-size-16 aico"></i>
+          <input
+            [(ngModel)]="usuario"
+            type="text"
+            id="username"
+            name="username"
+            autocomplete="off"
+            appAutofocus
+            class="w-100"
+            placeholder="Nombre"/>
+        </div>
+      </div>
+
+
+      <!-- contraseña nuevo usuario -->
+      <div class="grid input-form">
+        <div class="inner-addon left-addon">
+          <input
+            [(ngModel)]="clave"
+            type="password"
+            #inclave
+            id="clave"
+            name="clave"
+            autocomplete="off"
+            class="w-100"
+            placeholder="Contraseña"/>
+        </div>
+      </div>
+
+      
+      <!-- contraseña repetida nuevo usuario -->
+      <div class="grid input-form">
+        <div class="inner-addon left-addon">
+          <input
+            [(ngModel)]="clave_repetida"
+            type="password"
+            #inclave
+            id="clave"
+            name="clave"
+            autocomplete="off"
+            class="w-100"
+            placeholder="Repetir contraseña"/>
+        </div>
+      </div>
+
+
+      <!-- btn crear usuario -->
+      <div class="mb-0 pb-0 text-center">
+        <div class="inner-addon left-addon">
+          <i class="fa fa-user-circle aico user-icon"></i>
+          <button (click)="crearUsuario" type="submit" 
+            class="btn btn-primary btn-color-primary button-space">
+            <span class="font-new-roman mr-2 font-size-12 font-weight-bold">ACEPTAR</span>
+          </button>           
+        </div>
+
+  
+      </div> 
+      
+
+
+      </div>
+    
+      
+          
+      </form>
+
+
+
+    </div>
