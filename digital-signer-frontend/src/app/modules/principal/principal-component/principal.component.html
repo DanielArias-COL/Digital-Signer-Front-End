@@ -1,0 +1,73 @@
+<div class="wrapper">
+  <aside id="sidebar" [class.expand]="isSidebarExpanded">
+    <div class="d-flex">
+      <button class="toggle-btn" type="button" (click)="toggleSidebar()">
+        <i class="lni lni-grid-alt"></i>
+      </button>
+      <div class="sidebar-logo">
+        <h3 href="#">Digital Signer</h3>
+      </div>
+    </div>
+    <ul class="sidebar-nav">
+      <li class="sidebar-item">
+        <a href="#" class="sidebar-link">
+          <i class="lni lni-user"></i>
+          <span>Perfil</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+          data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+          <i class="lni lni-protection"></i>
+          <span>Autenticación</span>
+        </a>
+        <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+          <li class="sidebar-item">
+            <a href="#" class="sidebar-link">Iniciar sesión</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#" class="sidebar-link">Registrarse</a>
+          </li>
+        </ul>
+      </li>
+      <li class="sidebar-item">
+        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+          data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
+          <i class="lni lni-pencil-alt"></i>
+          <span>Herramientas</span>
+        </a>
+        <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+          <li class="sidebar-item">
+            <a href="#" class="sidebar-link">Generar llaves</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#" class="sidebar-link">Verificar documento</a>
+          </li>
+        </ul>
+      </li>
+      <li class="sidebar-item">
+        <a href="#" class="sidebar-link">
+          <i class="lni lni-popup"></i>
+          <span>Reportar</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a href="#" class="sidebar-link">
+          <i class="lni lni-cog"></i>
+          <span>Configuración</span>
+        </a>
+      </li>
+    </ul>
+    <div class="sidebar-footer">
+      <a href="#" class="sidebar-link">
+        <i class="lni lni-exit"></i>
+        <span>Cerras sesión</span>
+      </a>
+    </div>
+  </aside>
+  <div class="main p-3">
+    <div class="text-center">
+      <h1 class="animated-title">Digital Signer</h1>
+    </div>
+  </div>
+</div>

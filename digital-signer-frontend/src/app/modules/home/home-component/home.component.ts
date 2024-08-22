@@ -62,7 +62,8 @@ export class HomeComponent implements OnInit {
         .iniciarSesion(request)
         .subscribe(
           (res) => {
-            console.log(res);
+            sessionStorage.setItem('auth', JSON.stringify(res))
+            this.navigateTo("home/principal");
           },
           (error) => {
             this.msjError = "Error al intentar iniciar sesión";

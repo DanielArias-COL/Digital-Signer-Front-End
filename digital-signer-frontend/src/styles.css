@@ -1,8 +1,8 @@
 body {
   font-family: 'Open Sans', sans-serif !important;
+  margin: 0;
 }
 
-/* Estilos para autocomplete */
 .autocomplete-app {
   background-color: #f2f2f2 !important;
   border-radius: 15px !important;
@@ -17,8 +17,6 @@ body {
   padding-right: 15px !important;
   width: 100% !important;
 }
-
-/* Estilos para dropdown */
 
 .dropdown-app {
   border-radius: 15px !important;
@@ -86,8 +84,6 @@ body {
 .bg-clr .ui-dropdown-trigger {
   background-color: #f8f9fa !important
 }
-
-/* Estilos para los calendar */
 
 .calendar-app {
   border-radius: 15px !important;
