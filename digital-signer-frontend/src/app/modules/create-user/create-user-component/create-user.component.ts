@@ -22,7 +22,7 @@ export class CreateUserComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private BilleteraMarcaBlancaService: DigitalSignerService,
+    private digitalSignerService: DigitalSignerService,
     private messageService: MessageService
   ) { }
 
@@ -53,7 +53,10 @@ export class CreateUserComponent implements OnInit {
     return true;
   }
 
+  public test(): void {
 
+    console.log("khe");
+  }
 
   public crearUsuario(): void {
     
@@ -61,23 +64,33 @@ export class CreateUserComponent implements OnInit {
       this.usuario &&
       this.clave &&
       this.clave_repetida
+      
+      
     ) {
 
+      if( this.clave == this.clave_repetida){
 
-      
-
-      let request: RegisterRequestDTO = new RegisterRequestDTO();
-      request.user = this.usuario;
-      request.password = this.clave;
-      this.BilleteraMarcaBlancaService
-        .iniciarSesion(request)
-        .subscribe(
+        
+        let request: RegisterRequestDTO = new RegisterRequestDTO();  //let se utiliza para crear una nueva instancia de una clase, esa instancia solo puede ser usada en la función
+        request.user = this.usuario;
+        request.password = this.clave;
+        
+        this.digitalSignerService.createUser(request).subscribe(
           (res) => {
             sessionStorage.setItem('auth', JSON.stringify(res))
-            this.navigateTo("home/principal");
+            
+            this.msjError = "Usuario creado con éxito";   // código utilizado para mostrar los mensajes
+            this.messageService.add({
+              key: "toastPortal",
+              severity: "success",  
+              summary: this.msjError,
+            });  
+
+            this.vaciar_campos()
+
           },
           (error) => {
-            this.msjError = "Error al intentar iniciar sesión";
+            this.msjError = "Error al crear un nuevo usuario";
             this.messageService.add({
               key: "toastPortal",
               severity: "error",
@@ -85,14 +98,24 @@ export class CreateUserComponent implements OnInit {
             });
           }
         );
-    } else {
-      this.msjError = "Ingresa los campos requeridos";
+      }else{
+        this.msjError = "Las contraseña nos coinciden";
       this.messageService.add({
         key: "toastPortal",
         severity: "error",
         summary: this.msjError,
       });
+      }
+
     }
+
     
+  }
+
+  public vaciar_campos(): void {
+
+    this.usuario = ""
+    this.clave = ""
+    this.clave_repetida= ""
   }
 }
