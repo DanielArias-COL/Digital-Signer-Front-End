@@ -18,7 +18,7 @@
     top: 0;
     left: 0;
     opacity: 0.73;
-    background-image: linear-gradient(90deg, #7992e2, #0022ff), url('https://www.transparenttextures.com/patterns/cubes.png');
+    background-image: linear-gradient(90deg, #9768ff, #0c07b2), url('https://www.transparenttextures.com/patterns/cubes.png');
     background-size: cover;
   }
   
@@ -64,7 +64,7 @@
   }
   .subtitle {
     font-family: 'Open Sans', sans-serif !important;
-    color: #ababab;
+    color: #7450ec;
     font-weight: bold;
     justify-content: center;
   }
@@ -319,7 +319,7 @@
   }
   
   .olvido-password :hover{
-    color: #0b0bcf;
+    color: #2f1fc5;
   }
   
   .btn-color-primary {
