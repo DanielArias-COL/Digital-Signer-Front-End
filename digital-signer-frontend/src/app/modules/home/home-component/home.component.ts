@@ -14,11 +14,13 @@ export class HomeComponent implements OnInit {
 
   public usuario: string = "";
   public clave: string = "";
+  public clave_repetida: string = "";
   public msjError: string = "";
+  public initSesion =  true
 
   constructor(
     private router: Router,
-    private BilleteraMarcaBlancaService: DigitalSignerService,
+    private digitalSignerService: DigitalSignerService,
     private messageService: MessageService
   ) { }
 
@@ -58,7 +60,7 @@ export class HomeComponent implements OnInit {
       let request: SingInRequestDTO = new SingInRequestDTO();
       request.user = this.usuario;
       request.password = this.clave;
-      this.BilleteraMarcaBlancaService
+      this.digitalSignerService
         .iniciarSesion(request)
         .subscribe(
           (res) => {
@@ -85,18 +87,79 @@ export class HomeComponent implements OnInit {
   }
 
   public crearKeys() {
-    this.BilleteraMarcaBlancaService.generateKeys().subscribe(res => {
+    this.digitalSignerService.generateKeys().subscribe(res => {
       console.log(res);
     })
   }
 
   public crearCuenta() {
+    this.initSesion = false;
+  }
+
+
+
+  public crearUsuario(): void {
+    
+    if (
+      this.usuario &&
+      this.clave &&
+      this.clave_repetida
+      
+      
+    ) {
+
+      if( this.clave == this.clave_repetida){
+
+        
+        let request: SingInRequestDTO = new SingInRequestDTO();  //let se utiliza para crear una nueva instancia de una clase, esa instancia solo puede ser usada en la función
+        request.user = this.usuario;
+        request.password = this.clave;
+        
+        this.digitalSignerService.createUser(request).subscribe(
+          (res) => {
+            sessionStorage.setItem('auth', JSON.stringify(res))
+            
+            this.msjError = "Usuario creado con éxito";   // código utilizado para mostrar los mensajes
+            this.messageService.add({
+              key: "toastPortal",
+              severity: "success",  
+              summary: this.msjError,
+            });  
+
+            
+            this.navigateTo("");
+
+          },
+          (error) => {
+            this.msjError = "Error al crear un nuevo usuario";
+            this.messageService.add({
+              key: "toastPortal",
+              severity: "error",
+              summary: this.msjError,
+            });
+          }
+        );
+      }else{
+        this.msjError = "Las contraseña nos coinciden";
+      this.messageService.add({
+        key: "toastPortal",
+        severity: "error",
+        summary: this.msjError,
+      });
+      }
+
+    }else{
+      this.msjError = "LLenar los campos";
+      this.messageService.add({
+        key: "toastPortal",
+        severity: "error",
+        summary: this.msjError,
+      });
+    }
 
     
-    this.navigateTo("home/register");
-      
-    
   }
+
 
   public habilitarOlvidoPassword() {
 

@@ -34,7 +34,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   public onSubmit(form: NgForm) {
-    if (this.beforeIniciarSesion() && form.form.valid) {
+    if (this.beforeModule() && form.form.valid) {
       this.crearUsuario();
     }
   }
@@ -48,7 +48,7 @@ export class CreateUserComponent implements OnInit {
     this.router.navigate([route], { state: params });
   }
 
-  public beforeIniciarSesion(): boolean {
+  public beforeModule(): boolean {
     this.msjError = null;
     return true;
   }
@@ -87,6 +87,7 @@ export class CreateUserComponent implements OnInit {
             });  
 
             this.vaciar_campos()
+            this.navigateTo("");
 
           },
           (error) => {
@@ -107,6 +108,13 @@ export class CreateUserComponent implements OnInit {
       });
       }
 
+    }else{
+      this.msjError = "LLenar los campos";
+      this.messageService.add({
+        key: "toastPortal",
+        severity: "error",
+        summary: this.msjError,
+      });
     }
 
     
