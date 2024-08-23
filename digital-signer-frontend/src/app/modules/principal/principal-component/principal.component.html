@@ -38,7 +38,7 @@
         </a>
         <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link">Generar llaves</a>
+            <a (click)="mostrarModalGenerarKeys()" class="sidebar-link">Generar llaves</a>
           </li>
           <li class="sidebar-item">
             <a href="#" class="sidebar-link">Verificar documento</a>
@@ -69,5 +69,23 @@
     <div class="text-center">
       <h1 class="animated-title">Digital Signer</h1>
     </div>
+
+    <!-- Panel de generar llaves -->
+    <div *ngIf="esGenerarKeys" class="btn-generar-key text-center">
+      <button (click)="generarKeys()" class="btn secondary">
+        Generar Llaves
+      </button>
+    </div>
   </div>
 </div>
+
+<!-- Ventana de confirmacion de retroceder ventana -->
+<p-confirmDialog id="confApp" icon="pi pi-exclamation-triangle" #cd>
+  <p-footer>
+    <button class="" type="button" pButton icon="pi pi-check" label="Si" (click)="cd.accept()"></button>
+    <button class="" type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+  </p-footer>
+</p-confirmDialog>
+
+<!-- Estructura de mensajes de alerta -->
+<p-toast position="bottom-center" key="toastPortal" id="toastPortal" #toastPortal></p-toast>

@@ -1,21 +1,24 @@
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { DigitalSignerService } from "../../digital-signer.service";
-import { MessageService } from "primeng/api";
+import { ConfirmationService, MessageService } from "primeng/api";
 
 @Component({
   templateUrl: "./principal.component.html",
   styleUrls: ["./principal.component.css"],
-  providers: [DigitalSignerService, MessageService],
+  providers: [DigitalSignerService, MessageService, ConfirmationService],
 })
 export class PrincipalComponent implements OnInit {
 
   public isSidebarExpanded : boolean = false;
+  public msjError: string = "";
+  public esGenerarKeys: boolean = false;
 
   constructor(
     private router: Router,
     private BilleteraMarcaBlancaService: DigitalSignerService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
   ) { }
 
   /**
@@ -36,5 +39,54 @@ export class PrincipalComponent implements OnInit {
 
   public toggleSidebar() {
     this.isSidebarExpanded = !this.isSidebarExpanded;
+  }
+
+  public mostrarModalGenerarKeys() {
+    this.esGenerarKeys = true;
+  }
+
+  public generarKeys() {
+    let msj = '¿Está seguro que desea generar su llave privada?'
+    this.confirmationService.confirm({
+      message: msj,
+      header: "Generar llave",
+      accept: () => { 
+        this.BilleteraMarcaBlancaService
+        .generateKeys()
+            .subscribe(
+              (res) => {
+                console.log(res);
+                this.generarArchivoPEM(res.key);
+              },
+              (error) => {
+                this.msjError = "Se presento un error generando las llaves, intenta nuevamente en uunos minutos";
+                this.messageService.add({
+                  key: "toastPortal",
+                  severity: "error",
+                  summary: this.msjError,
+                });
+              }
+            );
+      },
+      reject: () => {
+
+      }
+    });
+  }
+
+  private generarArchivoPEM(encodedKey: string) {
+    const decodedKey = atob(encodedKey);
+    const pemKey = `-----BEGIN PRIVATE KEY-----\n${this.separarCadenaPEM(decodedKey, 64)}\n-----END PRIVATE KEY-----\n`;
+    const blob = new Blob([pemKey], { type: 'application/x-pem-file' });
+
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = 'privateKey.pem';
+    link.click();
+  }
+
+  private separarCadenaPEM(text: string, every: number) {
+    const regex = new RegExp(`(.{1,${every}})`, 'g');
+    return text.match(regex)?.join('\n') || text;
   }
 }

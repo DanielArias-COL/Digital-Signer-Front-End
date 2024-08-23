@@ -4,6 +4,8 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { SharedCommonModule } from "../shared/shared-common.module";
 import { ToastModule } from 'primeng/toast';
 import { PrincipalComponent } from "./principal-component/principal.component";
+import { ConfirmationService, MessageService } from "primeng/api";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
 
 @NgModule({
   imports: [
@@ -15,8 +17,13 @@ import { PrincipalComponent } from "./principal-component/principal.component";
     ]),
     SharedCommonModule,
     ReactiveFormsModule,
-    ToastModule
+    ToastModule,
+    ConfirmDialogModule
   ],
   declarations: [PrincipalComponent],
+  providers: [
+    ConfirmationService,
+    MessageService
+  ]
 })
 export class PrincipalModule {}

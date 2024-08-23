@@ -107,6 +107,7 @@ a.sidebar-link:hover {
 
 .sidebar-item {
     position: relative;
+    cursor: pointer;
 }
 
 #sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
@@ -182,4 +183,21 @@ a.sidebar-link:hover {
     50% {
       transform: scale(1.1); /* Aumenta el tamaño del texto */
     }
+  }
+
+  .btn {
+    border: none; 
+    color: white; 
+    padding: 14px 28px; 
+    cursor: pointer; 
+    border-radius: 5px; 
+    display: inline-block;
+    margin: 5px;
+  }
+
+  .secondary {background-image: linear-gradient(to right, #9768ff, #9868ff7e);} 
+  .secondary:hover {background-image: linear-gradient(to right, #5338d9b6, #5338d92c);}
+
+  .btn-generar-key {
+    margin-top: 15%;
   }
