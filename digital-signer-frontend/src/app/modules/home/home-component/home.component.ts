@@ -2,13 +2,13 @@ import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { DigitalSignerService } from "../../digital-signer.service";
 import { NgForm } from "@angular/forms";
-import { MessageService } from "primeng/api";
+import { ConfirmationService, MessageService } from "primeng/api";
 import { SingInRequestDTO } from "../dto/sing-in-request.dto";
 
 @Component({
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.css"],
-  providers: [DigitalSignerService, MessageService],
+  providers: [DigitalSignerService, MessageService, ConfirmationService],
 })
 export class HomeComponent implements OnInit {
 
@@ -16,12 +16,13 @@ export class HomeComponent implements OnInit {
   public clave: string = "";
   public clave_repetida: string = "";
   public msjError: string = "";
-  public initSesion =  true
+  public initSesion = true;
 
   constructor(
     private router: Router,
     private digitalSignerService: DigitalSignerService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
   ) { }
 
   /**
@@ -52,7 +53,6 @@ export class HomeComponent implements OnInit {
   }
 
   public iniciarSesion(): void {
-    
     if (
       this.usuario &&
       this.clave
@@ -64,8 +64,20 @@ export class HomeComponent implements OnInit {
         .iniciarSesion(request)
         .subscribe(
           (res) => {
-            sessionStorage.setItem('auth', JSON.stringify(res))
-            this.navigateTo("home/principal");
+            if (res.error 
+              && res.error.errorCode
+              && res.error.errorCode === "200"
+            ) {
+              sessionStorage.setItem('auth', JSON.stringify(res))
+              this.navigateTo("home/principal");
+            } else {
+              this.msjError = "Credenciales invalidas";
+              this.messageService.add({
+                key: "toastPortal",
+                severity: "error",
+                summary: this.msjError,
+              });
+            }
           },
           (error) => {
             this.msjError = "Error al intentar iniciar sesión";
@@ -92,43 +104,45 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  public regresarHome() {
+    let msj = '¿Está seguro que desea regresar?'
+    this.confirmationService.confirm({
+      message: msj,
+      header: "Regrsar menu",
+      accept: () => { 
+        this.initSesion = true;
+      },
+      reject: () => {
+
+      }
+    });
+  }
+
   public crearCuenta() {
     this.initSesion = false;
   }
 
-
-
   public crearUsuario(): void {
-    
     if (
       this.usuario &&
       this.clave &&
       this.clave_repetida
-      
-      
     ) {
-
       if( this.clave == this.clave_repetida){
-
-        
-        let request: SingInRequestDTO = new SingInRequestDTO();  //let se utiliza para crear una nueva instancia de una clase, esa instancia solo puede ser usada en la función
+        let request: SingInRequestDTO = new SingInRequestDTO();
         request.user = this.usuario;
         request.password = this.clave;
         
         this.digitalSignerService.createUser(request).subscribe(
           (res) => {
             sessionStorage.setItem('auth', JSON.stringify(res))
-            
-            this.msjError = "Usuario creado con éxito";   // código utilizado para mostrar los mensajes
+            this.msjError = "Usuario creado con éxito";
             this.messageService.add({
               key: "toastPortal",
               severity: "success",  
               summary: this.msjError,
             });  
-
-            
-            this.navigateTo("");
-
+            this.initSesion = true;
           },
           (error) => {
             this.msjError = "Error al crear un nuevo usuario";
@@ -155,9 +169,7 @@ export class HomeComponent implements OnInit {
         severity: "error",
         summary: this.msjError,
       });
-    }
-
-    
+    }   
   }
 
 

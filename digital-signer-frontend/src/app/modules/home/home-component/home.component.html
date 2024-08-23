@@ -161,9 +161,15 @@
         </button>           
       </div>
     </div> 
-  
-  </div>
 
+    <div class="inner-addon left-addon mt-2 text-center">
+      <i class="fa fa-user-circle aico user-icon"></i>
+      <button (click)="regresarHome()" type="submit" 
+        class="btn btn-secundary btn-color-secundary button-space">
+        <span class="font-new-roman mr-2 font-size-12 font-weight-bold">CANCELAR</span>
+      </button>           
+    </div>
+  </div>
   </form>
 
   </div>
@@ -174,7 +180,13 @@
   </div>
 </div>
 
-
+<!-- Ventana de confirmacion de retroceder ventana -->
+<p-confirmDialog id="confApp" icon="pi pi-exclamation-triangle" #cd>
+  <p-footer>
+    <button class="" type="button" pButton icon="pi pi-check" label="Si" (click)="cd.accept()"></button>
+    <button class="" type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+  </p-footer>
+</p-confirmDialog>
 
 <!-- Estructura de mensajes de alerta -->
 <p-toast position="bottom-center" key="toastPortal" id="toastPortal" #toastPortal></p-toast>

@@ -4,6 +4,8 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { HomeComponent } from "./home-component/home.component";
 import { SharedCommonModule } from "../shared/shared-common.module";
 import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from "primeng/confirmdialog";
+import { ConfirmationService, MessageService } from "primeng/api";
 
 /**
  * Modulo para la autenticacion del sistema
@@ -21,19 +23,17 @@ import { ToastModule } from 'primeng/toast';
         loadChildren: () =>
           import("../principal/principal.module").then((m) => m.PrincipalModule),
         
-      },
-      {
-        path: "register",
-        data: { preload: true },
-        loadChildren: () =>
-          import("../create-user/create-user.module").then((m) => m.CreateUserModule),
-        
       }
     ]),
     SharedCommonModule,
     ReactiveFormsModule,
-    ToastModule
+    ToastModule,
+    ConfirmDialogModule
   ],
   declarations: [HomeComponent],
+  providers: [
+    ConfirmationService,
+    MessageService
+  ]
 })
 export class HomeModule {}

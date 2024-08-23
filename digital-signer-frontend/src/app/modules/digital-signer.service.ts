@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { SingInRequestDTO } from "./home/dto/sing-in-request.dto";
 import { HomeAPIConstant } from "../constants/home.constant";
-import { RegisterRequestDTO } from "./create-user/dto-cu/create-user.dto";
 
 @Injectable({
   providedIn: "root",
@@ -21,7 +20,7 @@ export class DigitalSignerService {
     return this.http.post<any>(HomeAPIConstant.URL_SING_IN, request);
   }
 
-  public createUser(request: RegisterRequestDTO): Observable<any> {
+  public createUser(request: SingInRequestDTO): Observable<any> {
     return this.http.post<any>(HomeAPIConstant.URL_CREATE_USER, request);
   }
 
