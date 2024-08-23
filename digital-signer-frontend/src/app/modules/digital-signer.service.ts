@@ -13,7 +13,7 @@ export class DigitalSignerService {
 
   public generateKeys(
   ): Observable<any> {
-    return this.http.get<any>("http://localhost:9078/digitalSigner/user/1/generateKeyPair");
+    return this.http.get<any>(HomeAPIConstant.URL_GENERATE_KEYS_USER);
   }
 
   public iniciarSesion(request: SingInRequestDTO): Observable<any> {
@@ -23,6 +23,4 @@ export class DigitalSignerService {
   public createUser(request: SingInRequestDTO): Observable<any> {
     return this.http.post<any>(HomeAPIConstant.URL_CREATE_USER, request);
   }
-
-
 }
