@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
       this.digitalSignerService
         .iniciarSesion(request)
         .subscribe(
-          (res) => {
+          (res) => {            
             if (res.error 
               && res.error.errorCode
               && res.error.errorCode === "200"
@@ -100,12 +100,6 @@ export class HomeComponent implements OnInit {
         summary: this.msjError,
       });
     }
-  }
-
-  public crearKeys() {
-    this.digitalSignerService.generateKeys().subscribe(res => {
-      console.log(res);
-    })
   }
 
   public regresarHome() {

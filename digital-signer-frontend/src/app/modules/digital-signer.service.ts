@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { SingInRequestDTO } from "./home/dto/sing-in-request.dto";
 import { HomeAPIConstant } from "../constants/home.constant";
 
@@ -11,9 +11,11 @@ export class DigitalSignerService {
 
   constructor(private http: HttpClient) { }
 
-  public generateKeys(
-  ): Observable<any> {
-    return this.http.get<any>(HomeAPIConstant.URL_GENERATE_KEYS_USER);
+  public generateKeys(token): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<any>(HomeAPIConstant.URL_GENERATE_KEYS_USER, { headers });
   }
 
   public iniciarSesion(request: SingInRequestDTO): Observable<any> {

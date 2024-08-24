@@ -61,10 +61,9 @@ export class PrincipalComponent implements OnInit {
       header: "Generar llave",
       accept: () => { 
         this.BilleteraMarcaBlancaService
-        .generateKeys()
+        .generateKeys(this.jwt.jwt)
             .subscribe(
               (res) => {
-                console.log(res);
                 this.generarArchivoPEM(res.key);
               },
               (error) => {
