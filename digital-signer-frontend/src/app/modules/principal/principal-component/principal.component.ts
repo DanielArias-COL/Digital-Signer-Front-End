@@ -39,7 +39,7 @@ export class PrincipalComponent implements OnInit {
    * Inicializa el componente.
    */
   ngOnInit(): void {
-
+    this.listarArchivos();
   }
 
   /**
@@ -63,6 +63,16 @@ export class PrincipalComponent implements OnInit {
   public mostrarModalListarArchivos() {
     this.esGenerarKeys = false;
     this.esListarDocumentos = true;
+  }
+
+  private listarArchivos(): void {
+    this.digitalSignerService
+    .listFiles(this.jwt.jwt)
+    .subscribe(
+      (res) => {
+        this.archivosUsuario = res.listFiles;
+      }
+    );
   }
 
   public generarKeys() {

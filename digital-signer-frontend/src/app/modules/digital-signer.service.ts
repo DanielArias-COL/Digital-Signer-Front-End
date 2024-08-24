@@ -32,4 +32,11 @@ export class DigitalSignerService {
     });
     return this.http.post<any>(HomeAPIConstant.URL_SUBIR_ARCHIVOS, files, { headers });
   }
+
+  public listFiles(token : string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<any>(HomeAPIConstant.URL_LISTAR_ARCHIVOS, { headers });
+  }
 }

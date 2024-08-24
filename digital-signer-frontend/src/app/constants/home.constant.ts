@@ -7,7 +7,9 @@ export class HomeAPIConstant {
 
   static readonly URL_CREATE_USER: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/create";
 
-  static readonly URL_GENERATE_KEYS_USER: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/1/generateKeyPair";
+  static readonly URL_GENERATE_KEYS_USER: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/generateKeyPair";
 
   static readonly URL_SUBIR_ARCHIVOS: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/saveFiles ";
+
+  static readonly URL_LISTAR_ARCHIVOS: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/listFiles ";
 }
