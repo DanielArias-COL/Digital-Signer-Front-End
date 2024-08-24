@@ -2,6 +2,7 @@ import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { DigitalSignerService } from "../../digital-signer.service";
 import { ConfirmationService, MessageService } from "primeng/api";
+import { JWTDTO } from "src/app/dto/token-request.dto";
 
 @Component({
   templateUrl: "./principal.component.html",
@@ -13,13 +14,21 @@ export class PrincipalComponent implements OnInit {
   public isSidebarExpanded : boolean = false;
   public msjError: string = "";
   public esGenerarKeys: boolean = false;
+  public jwt: JWTDTO;
+  
 
   constructor(
     private router: Router,
     private BilleteraMarcaBlancaService: DigitalSignerService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-  ) { }
+  ) {
+      const navigation = this.router.getCurrentNavigation();
+      const state = navigation?.extras.state as {
+        data: JWTDTO;
+      }
+      this.jwt = state.data;
+    }
 
   /**
    * Inicializa el componente.
