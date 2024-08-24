@@ -46,10 +46,16 @@
         </ul>
       </li>
       <li class="sidebar-item">
-        <a href="#" class="sidebar-link">
-          <i class="lni lni-popup"></i>
-          <span>Reportar</span>
+        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+          data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
+          <i class="lni lni-files"></i>
+          <span>Mis documentos</span>
         </a>
+        <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+          <li class="sidebar-item">
+            <a (click)="mostrarModalGenerarKeys()" class="sidebar-link">Listar documentos</a>
+          </li>
+        </ul>
       </li>
       <li class="sidebar-item">
         <a href="#" class="sidebar-link">
@@ -71,6 +77,13 @@
     </div>
 
     <!-- Panel de generar llaves -->
+    <div *ngIf="esGenerarKeys" class="btn-generar-key text-center">
+      <button (click)="generarKeys()" class="btn secondary">
+        Generar Llaves
+      </button>
+    </div>
+
+    <!-- Panel de lisar documentos -->
     <div *ngIf="esGenerarKeys" class="btn-generar-key text-center">
       <button (click)="generarKeys()" class="btn secondary">
         Generar Llaves
