@@ -1,8 +1,9 @@
 import { Router } from "@angular/router";
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { DigitalSignerService } from "../../digital-signer.service";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { JWTDTO } from "src/app/dto/token-request.dto";
+import { ArchivoDTO } from "../dto/archivo-request.dto";
 
 @Component({
   templateUrl: "./principal.component.html",
@@ -11,15 +12,19 @@ import { JWTDTO } from "src/app/dto/token-request.dto";
 })
 export class PrincipalComponent implements OnInit {
 
+  @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
+
   public isSidebarExpanded : boolean = false;
   public msjError: string = "";
   public esGenerarKeys: boolean = false;
+  public esListarDocumentos: boolean = false;
   public jwt: JWTDTO;
-  
+  public archivosUsuario: ArchivoDTO[];
+  public rowsPerPageOptions: Array<number>;
 
   constructor(
     private router: Router,
-    private BilleteraMarcaBlancaService: DigitalSignerService,
+    private digitalSignerService: DigitalSignerService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
   ) {
@@ -52,6 +57,12 @@ export class PrincipalComponent implements OnInit {
 
   public mostrarModalGenerarKeys() {
     this.esGenerarKeys = true;
+    this.esListarDocumentos = false;
+  }
+
+  public mostrarModalListarArchivos() {
+    this.esGenerarKeys = false;
+    this.esListarDocumentos = true;
   }
 
   public generarKeys() {
@@ -60,14 +71,14 @@ export class PrincipalComponent implements OnInit {
       message: msj,
       header: "Generar llave",
       accept: () => { 
-        this.BilleteraMarcaBlancaService
+        this.digitalSignerService
         .generateKeys(this.jwt.jwt)
             .subscribe(
               (res) => {
                 this.generarArchivoPEM(res.key);
               },
               (error) => {
-                this.msjError = "Se presento un error generando las llaves, intenta nuevamente en uunos minutos";
+                this.msjError = "Se presento un error generando las llaves, intenta nuevamente en unos minutos";
                 this.messageService.add({
                   key: "toastPortal",
                   severity: "error",
@@ -80,6 +91,44 @@ export class PrincipalComponent implements OnInit {
 
       }
     });
+  }
+
+  public triggerFileInput(): void {
+    this.fileInput.nativeElement.click();
+  }
+
+  public onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const files = Array.from(input.files);
+      this.subirArchivos(files);
+    }
+  }
+
+  private subirArchivos(files: File[]): void {
+    const formData = new FormData();
+    files.forEach(file => formData.append('files', file));
+
+    this.digitalSignerService
+        .saveFiles(this.jwt.jwt, formData)
+            .subscribe(
+              (res) => {
+                this.msjError = "Tus archivos se cargaron exitosamente";
+                this.messageService.add({
+                  key: "toastPortal",
+                  severity: "success",
+                  summary: this.msjError,
+                });
+              },
+              (error) => {
+                this.msjError = "Se presento un error cargando tus archivos, intenta nuevamente en unos minutos";
+                this.messageService.add({
+                  key: "toastPortal",
+                  severity: "error",
+                  summary: this.msjError,
+                });
+              }
+            );
   }
 
   private generarArchivoPEM(encodedKey: string) {

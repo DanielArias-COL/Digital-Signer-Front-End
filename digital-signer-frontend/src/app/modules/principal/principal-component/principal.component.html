@@ -46,14 +46,14 @@
         </ul>
       </li>
       <li class="sidebar-item">
-        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+        <a class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
           data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
           <i class="lni lni-files"></i>
           <span>Mis documentos</span>
         </a>
         <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
           <li class="sidebar-item">
-            <a (click)="mostrarModalGenerarKeys()" class="sidebar-link">Listar documentos</a>
+            <a (click)="mostrarModalListarArchivos()" class="sidebar-link">Listar documentos</a>
           </li>
         </ul>
       </li>
@@ -84,10 +84,60 @@
     </div>
 
     <!-- Panel de lisar documentos -->
-    <div *ngIf="esGenerarKeys" class="btn-generar-key text-center">
-      <button (click)="generarKeys()" class="btn secondary">
-        Generar Llaves
-      </button>
+    <div *ngIf="esListarDocumentos" class="text-center">
+
+      <div class="btn-subir-archivo text-center">
+        <button (click)="triggerFileInput()" class="btn secondary">Subir archivo</button>
+        <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)" multiple />
+      </div>
+
+      <!-- tbl file -->
+      <div class="ui-g-12 pt-0">
+        <p-table 
+          id="tblFile" 
+          #tblFile styleClass="tbl-app" 
+          [value]="archivosUsuario"
+          alwaysShowPaginator="true" 
+          [rowsPerPageOptions]="rowsPerPageOptions"
+          [rows]="5" 
+          [responsive]="true" 
+          [paginator]="false" 
+          [lazy]="true" 
+          styleClass="tbl-app"
+          [showCurrentPageReport]="true">
+          <ng-template pTemplate="header">
+            <tr style="text-align: center">
+              <th class="pt-0" style="width: 33.33%;">Nombre</th>
+              <th class="pt-0" style="width: 33.3%;">¿Esta firmado?</th>
+              <th class="pt-0" style="width: 33.3%;">Opciones</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-file>
+            <tr>
+              <td>{{ file.name }}</td>
+              <td> {{ file.isSigned }}</td>
+              <td>
+                <i class="fa fa-search-plus font-size-24 detalle"
+                  title="Firmar archivo"></i>
+                <i  class="fa fa-pencil font-size-24 pencil ml-3"
+                  title="Confirmar archivo"></i>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td [attr.colspan]="7">
+                <div class="mr-2 ml-2 mt-2 mb-2 ui-messages ui-messages-info ui-corner-all p-2">
+                  <span class="ui-messages-icon pi pi-info-circle"></span>
+                  <span class="ui-messages-detail font-size-15 mt-1">
+                    Aun no has cargado documentos
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
     </div>
   </div>
 </div>

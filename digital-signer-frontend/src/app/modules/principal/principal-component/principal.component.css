@@ -201,3 +201,9 @@ a.sidebar-link:hover {
   .btn-generar-key {
     margin-top: 15%;
   }
+
+  .btn-subir-archivo {
+    margin-top: 5%;
+    margin-left: 70%;
+    margin-block: 2%;
+  }

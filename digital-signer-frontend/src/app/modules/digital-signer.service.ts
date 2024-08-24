@@ -11,7 +11,7 @@ export class DigitalSignerService {
 
   constructor(private http: HttpClient) { }
 
-  public generateKeys(token): Observable<any> {
+  public generateKeys(token: string): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -24,5 +24,12 @@ export class DigitalSignerService {
 
   public createUser(request: SingInRequestDTO): Observable<any> {
     return this.http.post<any>(HomeAPIConstant.URL_CREATE_USER, request);
+  }
+
+  public saveFiles(token : string, files: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post<any>(HomeAPIConstant.URL_SUBIR_ARCHIVOS, files, { headers });
   }
 }
