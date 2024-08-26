@@ -5,33 +5,33 @@
         <i class="lni lni-grid-alt"></i>
       </button>
       <div class="sidebar-logo">
-        <h3 href="#">Digital Signer</h3>
+        <h3>Digital Signer</h3>
       </div>
     </div>
     <ul class="sidebar-nav">
       <li class="sidebar-item">
-        <a href="#" class="sidebar-link">
+        <a class="sidebar-link">
           <i class="lni lni-user"></i>
           <span>Perfil</span>
         </a>
       </li>
       <li class="sidebar-item">
-        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+        <a class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
           data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
           <i class="lni lni-protection"></i>
           <span>Autenticación</span>
         </a>
         <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link">Iniciar sesión</a>
+            <a class="sidebar-link">Iniciar sesión</a>
           </li>
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link">Registrarse</a>
+            <a class="sidebar-link">Registrarse</a>
           </li>
         </ul>
       </li>
       <li class="sidebar-item">
-        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+        <a class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
           data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
           <i class="lni lni-pencil-alt"></i>
           <span>Herramientas</span>
@@ -41,7 +41,10 @@
             <a (click)="mostrarModalGenerarKeys()" class="sidebar-link">Generar llaves</a>
           </li>
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link">Verificar documento</a>
+            <a class="sidebar-link">Firmar documento</a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link">Verificar documento</a>
           </li>
         </ul>
       </li>
@@ -58,14 +61,14 @@
         </ul>
       </li>
       <li class="sidebar-item">
-        <a href="#" class="sidebar-link">
+        <a class="sidebar-link">
           <i class="lni lni-cog"></i>
           <span>Configuración</span>
         </a>
       </li>
     </ul>
     <div class="sidebar-footer">
-      <a href="#" class="sidebar-link">
+      <a class="sidebar-link">
         <i class="lni lni-exit"></i>
         <span>Cerras sesión</span>
       </a>
@@ -107,19 +110,24 @@
           [showCurrentPageReport]="true">
           <ng-template pTemplate="header">
             <tr style="text-align: center">
-              <th class="pt-0" style="width: 33.33%;">Nombre</th>
-              <th class="pt-0" style="width: 33.3%;">¿Esta firmado?</th>
-              <th class="pt-0" style="width: 33.3%;">Opciones</th>
+              <th class="pt-0; text-center" style="width: 33.33%;">Nombre</th>
+              <th class="pt-0; text-center" style="width: 33.3%;">¿Esta firmado?</th>
+              <th class="pt-0; text-center" style="width: 33.3%;">Opciones</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-file>
-            <tr>
-              <td>{{ file.name }}</td>
-              <td> {{ file.isSigned }}</td>
-              <td>
-                <i class="fa fa-search-plus font-size-24 detalle"
+            <tr style="text-align: center" >
+              <td class="text-center">{{ file.name }}</td>
+              <td class="text-center">
+                <i *ngIf="file.signed" class="lni lni-smile font-size-24 detalle icon-green"
+                  title="Archivo firmado"></i>
+                <i *ngIf="!file.signed" class="lni lni-sad font-size-24 detalle icon-gray"
+                  title="Archivo sin firmar"></i>    
+              </td>
+              <td class="text-center">
+                <i class="lni lni-pencil-alt font-size-24 detalle"
                   title="Firmar archivo"></i>
-                <i  class="fa fa-pencil font-size-24 pencil ml-3"
+                <i  class="lni lni-checkmark-circle font-size-24 pencil ml-3"
                   title="Confirmar archivo"></i>
               </td>
             </tr>

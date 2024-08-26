@@ -70,6 +70,7 @@ export class PrincipalComponent implements OnInit {
     .listFiles(this.jwt.jwt)
     .subscribe(
       (res) => {
+        console.log(res);
         this.archivosUsuario = res.listFiles;
       }
     );

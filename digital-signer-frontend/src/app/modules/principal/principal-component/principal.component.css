@@ -207,3 +207,11 @@ a.sidebar-link:hover {
     margin-left: 70%;
     margin-block: 2%;
   }
+
+  .icon-red{
+    color: red;
+  }
+
+  .icon-gray{
+    color: gray;
+  }
