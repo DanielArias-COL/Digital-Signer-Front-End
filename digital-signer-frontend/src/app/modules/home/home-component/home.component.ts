@@ -70,7 +70,6 @@ export class HomeComponent implements OnInit {
               && res.error.errorCode
               && res.error.errorCode === "200"
             ) {
-              sessionStorage.setItem('auth', JSON.stringify(res));
               let jwtdto: JWTDTO  = new  JWTDTO;
               jwtdto.jwt = res.jwt;
               this.navigateTo("home/principal", {data: jwtdto});
