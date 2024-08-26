@@ -1,3 +1,4 @@
+// @ts-ignore
 import { Component } from '@angular/core';
 import { SpinnerState } from './../../states/spinner.state';
 
