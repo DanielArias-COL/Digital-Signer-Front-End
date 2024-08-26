@@ -123,12 +123,27 @@ export class PrincipalComponent implements OnInit {
         .saveFiles(this.jwt.jwt, formData)
             .subscribe(
               (res) => {
-                this.msjError = "Tus archivos se cargaron exitosamente";
-                this.messageService.add({
-                  key: "toastPortal",
-                  severity: "success",
-                  summary: this.msjError,
-                });
+                console.log(res);
+                
+                if (res.error 
+                  && res.error.errorCode
+                  && res.error.errorCode === "200"
+                ) {
+                  this.listarArchivos();
+                  this.msjError = "Tus archivos se cargaron exitosamente";
+                  this.messageService.add({
+                    key: "toastPortal",
+                    severity: "success",
+                    summary: this.msjError,
+                  });
+                } else {
+                  this.msjError = "Se presento un error cargando tus archivos, intenta nuevamente en unos minutos";
+                  this.messageService.add({
+                    key: "toastPortal",
+                    severity: "error",
+                    summary: this.msjError,
+                  });
+                }
               },
               (error) => {
                 this.msjError = "Se presento un error cargando tus archivos, intenta nuevamente en unos minutos";
