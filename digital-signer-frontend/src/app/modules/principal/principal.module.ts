@@ -7,6 +7,7 @@ import { PrincipalComponent } from "./principal-component/principal.component";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { TableModule } from "primeng/table";
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { TableModule } from "primeng/table";
     ReactiveFormsModule,
     ToastModule,
     ConfirmDialogModule,
-    TableModule
+    TableModule,
+    DropdownModule
   ],
   declarations: [PrincipalComponent],
   providers: [

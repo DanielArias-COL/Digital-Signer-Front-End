@@ -148,70 +148,82 @@ a.sidebar-link:hover {
 .text-center {
     text-align: center;
     padding-top: 0vh;
-  }
+}
   
-  .animated-title {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    font-size: 30px;
-    color: #7450ec;
-    display: inline-block;
+.animated-title {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 30px;
+  color: #7450ec;
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(-50px);
+  animation: fadeInUp 1s forwards, pulse 2s infinite;
+}
+
+@keyframes fadeInUp {
+  0% {
     opacity: 0;
     transform: translateY(-50px);
-    animation: fadeInUp 1s forwards, pulse 2s infinite;
   }
+  50% {
+    opacity: 1;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1); /* Aumenta el tamaño del texto */
+  }
+}
+
+.btn {
+  border: none; 
+  color: white; 
+  padding: 14px 28px; 
+  cursor: pointer; 
+  border-radius: 5px; 
+  display: inline-block;
+  margin: 5px;
+}
+
+.secondary {background-image: linear-gradient(to right, #9768ff, #9868ff7e);} 
+.secondary:hover {background-image: linear-gradient(to right, #5338d9b6, #5338d92c);}
+
+.btn-generar-key {
+  margin-top: 15%;
+}
+
+.btn-subir-archivo {
+  margin-top: 5%;
+  margin-left: 70%;
+  margin-block: 2%;
+}
+
+.icon-red{
+  color: red;
+}
+
+.icon-gray{
+  color: gray;
+}
+
+.contenedor-firma{
+  background-color: gray;
+  width: 85%;
+  height: 70%;
+  margin: auto;
   
-  @keyframes fadeInUp {
-    0% {
-      opacity: 0;
-      transform: translateY(-50px);
-    }
-    50% {
-      opacity: 1;
-      transform: translateY(10px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes pulse {
-    0%, 100% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.1); /* Aumenta el tamaño del texto */
-    }
-  }
+}
 
-  .btn {
-    border: none; 
-    color: white; 
-    padding: 14px 28px; 
-    cursor: pointer; 
-    border-radius: 5px; 
-    display: inline-block;
-    margin: 5px;
-  }
-
-  .secondary {background-image: linear-gradient(to right, #9768ff, #9868ff7e);} 
-  .secondary:hover {background-image: linear-gradient(to right, #5338d9b6, #5338d92c);}
-
-  .btn-generar-key {
-    margin-top: 15%;
-  }
-
-  .btn-subir-archivo {
-    margin-top: 5%;
-    margin-left: 70%;
-    margin-block: 2%;
-  }
-
-  .icon-red{
-    color: red;
-  }
-
-  .icon-gray{
-    color: gray;
-  }
+.altura-subdiv{
+  height: 33%;
+}

@@ -41,7 +41,7 @@
             <a (click)="mostrarModalGenerarKeys()" class="sidebar-link">Generar llaves</a>
           </li>
           <li class="sidebar-item">
-            <a class="sidebar-link">Firmar documento</a>
+            <a (click)="mostrarModalFirmarDocumentos()" class="sidebar-link">Firmar documento</a>
           </li>
           <li class="sidebar-item">
             <a class="sidebar-link">Verificar documento</a>
@@ -84,6 +84,43 @@
       <button (click)="generarKeys()" class="btn secondary">
         Generar Llaves
       </button>
+    </div>
+
+    <!--Panel de firmar documento-->
+    <div *ngIf="esFirmarDocumentos" class="contenedor-firma text-center ui-g">
+      <div class="grid altura-subdiv "> 
+        <div class="col-4 text-center"> 
+            <label for=""> Archivo a firmar:</label>
+        </div>
+        <div class="col-4 text-center" >
+            <p-dropdown [options]="listaArchivos" >
+              
+            </p-dropdown>
+        </div>
+        <div class="col-4 text-center">
+          <button (click)="generarKeys()" class="btn secondary">
+            Cambiar archivo
+          </button>
+        </div>
+      </div>
+      <div class="grid altura-subdiv"> 
+        <div class="col-6 text-center"> 
+          <label for=""> Subir llave privada:</label>
+        </div>
+        <div class="col-6 text-center">
+          <button (click)="triggerFileInput()" class="btn secondary">Subir archivo</button>
+          <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)" multiple />
+       </div>
+      </div>
+      <div class="grid altura-subdiv"> 
+        <div class="col-4 text-center"> </div>
+        <div class="col-4 text-center">
+          <button (click)="generarKeys()" class="btn secondary">
+            Firmar archivo
+          </button>
+        </div>
+        <div class="col-4 text-center"> </div>
+      </div>
     </div>
 
     <!-- Panel de lisar documentos -->

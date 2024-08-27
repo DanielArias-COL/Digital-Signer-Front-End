@@ -18,9 +18,11 @@ export class PrincipalComponent implements OnInit {
   public msjError: string = "";
   public esGenerarKeys: boolean = false;
   public esListarDocumentos: boolean = false;
+  public esFirmarDocumentos: boolean = false;
   public jwt: JWTDTO;
   public archivosUsuario: ArchivoDTO[];
   public rowsPerPageOptions: Array<number>;
+  public listaArchivos = [];
 
   constructor(
     private router: Router,
@@ -55,12 +57,19 @@ export class PrincipalComponent implements OnInit {
     this.isSidebarExpanded = !this.isSidebarExpanded;
   }
 
+  public mostrarModalFirmarDocumentos() {
+    this.esFirmarDocumentos = true;
+    this.esGenerarKeys = false;
+    this.esListarDocumentos = false;
+  }
   public mostrarModalGenerarKeys() {
     this.esGenerarKeys = true;
+    this.esFirmarDocumentos = false;
     this.esListarDocumentos = false;
   }
 
   public mostrarModalListarArchivos() {
+    this.esFirmarDocumentos = false;
     this.esGenerarKeys = false;
     this.esListarDocumentos = true;
   }
