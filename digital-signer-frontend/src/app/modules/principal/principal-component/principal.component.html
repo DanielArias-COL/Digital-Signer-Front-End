@@ -112,8 +112,8 @@
           <label for="">Adjunta tu llave privada:</label>
         </div>
         <div class="col-3 text-center">
-          <button (click)="triggerFileInput()" class="btn secondary">Subir archivo</button>
-          <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)" multiple />
+          <button (click)="triggerPrivateKeyInput()" class="btn secondary">{{buttonLabelName}}</button>
+          <input type="file" #privateKey style="display: none;" (change)="onPrivateKeySelected($event)" accept=".pem" multiple />
        </div>
        <div class="col-3"></div>
       </div>

@@ -13,22 +13,21 @@ import { ArchivoDTO } from "../dto/archivo-request.dto";
 export class PrincipalComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
-
+  @ViewChild('privateKey') privateKeyInput: ElementRef<HTMLInputElement>;
   public isSidebarExpanded : boolean = false;
   public msjError: string = "";
   public esGenerarKeys: boolean = false;
   public esListarDocumentos: boolean = false;
   public esFirmarDocumentos: boolean = false;
   public jwt: JWTDTO;
-  public archivosUsuario: ArchivoDTO[];
+  public archivosUsuario: ArchivoDTO[] = null;
   public rowsPerPageOptions: Array<number>;
-  public items = [
-    { id: 1, name: 'Item 1' },
-    { id: 2, name: 'Item 2' },
-    { id: 3, name: 'Item 3' },
-  ];
+  public buttonLabelName: string = 'Subir Archivo'
+  //public items = this.obtenerListaArchivosFD();
+  public items =  [];
   public filteredItems: any[] = [];
   public selectedItem: any;
+  public privateKey;
 
   constructor(
     private router: Router,
@@ -91,11 +90,27 @@ export class PrincipalComponent implements OnInit {
     .listFiles(this.jwt.jwt)
     .subscribe(
       (res) => {
-        console.log(res);
+        //console.log(res);
         this.archivosUsuario = res.listFiles;
+        this.obtenerListaArchivosFD();
       }
     );
   }
+
+  private obtenerListaArchivosFD(): void {
+    let contador: number = 0;
+    let items: { id: number; name: string }[] = [];
+
+    for(const row of this.archivosUsuario){
+        const item = {id: contador, name: row.name};
+        items.push(item);
+        contador++;
+    }
+    
+    this.items = items;
+    
+}
+
 
   public generarKeys() {
     let msj = '¿Está seguro que desea generar su llave privada?'
@@ -125,6 +140,10 @@ export class PrincipalComponent implements OnInit {
     });
   }
 
+  
+  public triggerPrivateKeyInput(): void {
+    this.privateKeyInput.nativeElement.click();
+  }
   public triggerFileInput(): void {
     this.fileInput.nativeElement.click();
   }
@@ -137,6 +156,14 @@ export class PrincipalComponent implements OnInit {
     }
   }
 
+
+  public onPrivateKeySelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+        this.privateKey = input.files[0];
+        this.buttonLabelName = this.privateKey.name;
+    }
+  }
   private subirArchivos(files: File[]): void {
     const formData = new FormData();
     files.forEach(file => formData.append('files', file));
