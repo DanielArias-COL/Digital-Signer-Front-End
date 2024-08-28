@@ -22,7 +22,13 @@ export class PrincipalComponent implements OnInit {
   public jwt: JWTDTO;
   public archivosUsuario: ArchivoDTO[];
   public rowsPerPageOptions: Array<number>;
-  public listaArchivos = [];
+  public items = [
+    { id: 1, name: 'Item 1' },
+    { id: 2, name: 'Item 2' },
+    { id: 3, name: 'Item 3' },
+  ];
+  public filteredItems: any[] = [];
+  public selectedItem: any;
 
   constructor(
     private router: Router,
@@ -55,6 +61,12 @@ export class PrincipalComponent implements OnInit {
 
   public toggleSidebar() {
     this.isSidebarExpanded = !this.isSidebarExpanded;
+  }
+
+  public search(event) {
+    this.filteredItems = this.items.filter(item => 
+      item.name.toLowerCase().includes(event.query.toLowerCase())
+    );
   }
 
   public mostrarModalFirmarDocumentos() {

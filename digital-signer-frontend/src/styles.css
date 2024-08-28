@@ -18,38 +18,15 @@ body {
   width: 100% !important;
 }
 
-.dropdown-app {
-  border-radius: 15px !important;
-  border: 0px !important;
+::ng-deep .ui-dropdown, 
+::ng-deep .ui-dropdown-panel,
+::ng-deep .ui-dropdown-label {
+    width: 100% !important;
+    display: block !important;
 }
 
-.ui-dropdown {
-  background: #f2f2f2 !important;
-}
-
-.dropdown-app .ui-dropdown-trigger {
-  background-color: #f2f2f2 !important;
-  border-radius: 15px !important;
-}
-
-.dropdown-app .ui-placeholder {
-  font-family: 'Open Sans', sans-serif !important;
-  font-size: 15px !important;
-  color: #66676A !important;
-}
-
-.dropdown-app .ui-dropdown-label {
-  border-radius: 15px;
-  background-color: #f2f2f2;
-  font-family: 'Open Sans', sans-serif !important;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
-.dropdown-app:not(.ui-state-disabled).ui-state-focus {
-  box-shadow: 0 0 0 0.2em #fff !important;
+::ng-deep .ui-dropdown .ui-dropdown-label-container {
+    width: 100% !important;
 }
 
 .app-wico .ui-dropdown-trigger-icon {

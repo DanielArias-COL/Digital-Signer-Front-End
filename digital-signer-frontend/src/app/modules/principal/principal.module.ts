@@ -8,6 +8,7 @@ import { ConfirmationService, MessageService } from "primeng/api";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { TableModule } from "primeng/table";
 import { DropdownModule } from 'primeng/dropdown';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { DropdownModule } from 'primeng/dropdown';
     ToastModule,
     ConfirmDialogModule,
     TableModule,
-    DropdownModule
+    DropdownModule,
+    AutoCompleteModule
   ],
   declarations: [PrincipalComponent],
   providers: [

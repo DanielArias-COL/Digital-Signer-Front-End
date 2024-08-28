@@ -217,13 +217,24 @@ a.sidebar-link:hover {
 }
 
 .contenedor-firma{
-  background-color: gray;
+  background-color: #9868ff3a;
   width: 85%;
   height: 70%;
   margin: auto;
-  
+  border-radius: 20px;
+}
+
+.elevated-div {
+  padding: 20px;
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1);
 }
 
 .altura-subdiv{
-  height: 33%;
+  height: 34.5%;
+  align-items: center;
+}
+
+.custom-dropdown {
+  flex-grow: 1;
+  min-width: 0;
 }

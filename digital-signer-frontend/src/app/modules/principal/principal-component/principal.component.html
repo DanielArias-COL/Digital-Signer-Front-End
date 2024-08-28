@@ -87,30 +87,35 @@
     </div>
 
     <!--Panel de firmar documento-->
-    <div *ngIf="esFirmarDocumentos" class="contenedor-firma text-center ui-g">
-      <div class="grid altura-subdiv "> 
-        <div class="col-4 text-center"> 
-            <label for=""> Archivo a firmar:</label>
+    <div *ngIf="esFirmarDocumentos" class="contenedor-firma text-center ui-g mt-3">
+      <div class="grid altura-subdiv ">
+        <div class="col-2"></div>
+        <div class="col-3 text-right"> 
+            <label> Archivo a firmar:</label>
         </div>
-        <div class="col-4 text-center" >
-            <p-dropdown [options]="listaArchivos" >
-              
-            </p-dropdown>
+        <div class="col-5 text-center">
+          <p-autoComplete 
+              [suggestions]="filteredItems" 
+              (completeMethod)="search($event)" 
+              field="name"
+              [dropdown]="true"
+              [(ngModel)]="selectedItem"
+              placeholder="Seleccione un archivo"
+              emptyMessage="No se encontraron archivos"
+          ></p-autoComplete>
         </div>
-        <div class="col-4 text-center">
-          <button (click)="generarKeys()" class="btn secondary">
-            Cambiar archivo
-          </button>
-        </div>
+        <div class="col-2"></div>
       </div>
-      <div class="grid altura-subdiv"> 
-        <div class="col-6 text-center"> 
-          <label for=""> Subir llave privada:</label>
+      <div class="grid altura-subdiv">
+        <div class="col-3"></div>
+        <div class="col-3 text-center"> 
+          <label for="">Adjunta tu llave privada:</label>
         </div>
-        <div class="col-6 text-center">
+        <div class="col-3 text-center">
           <button (click)="triggerFileInput()" class="btn secondary">Subir archivo</button>
           <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)" multiple />
        </div>
+       <div class="col-3"></div>
       </div>
       <div class="grid altura-subdiv"> 
         <div class="col-4 text-center"> </div>
