@@ -4,6 +4,7 @@ import { DigitalSignerService } from "../../digital-signer.service";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { JWTDTO } from "src/app/dto/token-request.dto";
 import { ArchivoDTO } from "../dto/archivo-request.dto";
+import { SignedFileDTO } from "../dto/firmar-archivo-request.dto";
 
 @Component({
   templateUrl: "./principal.component.html",
@@ -80,8 +81,15 @@ export class PrincipalComponent implements OnInit {
     this.esGenerarKeys = false;
     this.esListarDocumentos = false;
   }
+
   public mostrarModalGenerarKeys() {
     this.esGenerarKeys = true;
+    this.esFirmarDocumentos = false;
+    this.esListarDocumentos = false;
+  }
+
+  public mostrarMenu() {
+    this.esGenerarKeys = false;
     this.esFirmarDocumentos = false;
     this.esListarDocumentos = false;
   }
@@ -111,15 +119,63 @@ export class PrincipalComponent implements OnInit {
     let items: { id: number; name: string }[] = [];
 
     for(const row of this.archivosUsuario){
-        const item = {id: contador, name: row.name};
+        const item = {id: row.id, name: row.name};
         items.push(item);
         contador++;
     }
     
     this.items = items;
     
-}
+  }
 
+  public saveFile() {    
+    let msj = '¿Está seguro que desea firmar su documento?'
+    this.confirmationService.confirm({
+      message: msj,
+      header: "Firmar Documento",
+      accept: () => { 
+        let request = new SignedFileDTO();
+        request.idFile=this.selectedItem.id;
+        request.privateKey=this.privateKey;
+        this.digitalSignerService
+        .signedfiles(this.jwt.jwt, request)
+            .subscribe(
+              (res) => {
+                if (res.error 
+                  && res.error.errorCode
+                  && res.error.errorCode === "200"
+                ) {
+                  this.msjError = "Tu archivo se firmo correctamente";
+                  this.messageService.add({
+                    key: "toastPortal",
+                    severity: "success",
+                    summary: this.msjError,
+                  });
+                } else {
+                  this.msjError = "Se presento un error firmando tu archivo, intenta nuevamente en unos minutos";
+                  this.messageService.add({
+                    key: "toastPortal",
+                    severity: "error",
+                    summary: this.msjError,
+                  });
+                }
+                this.mostrarMenu();
+              },
+              (error) => {
+                this.msjError = "Se presento un error generando las llaves, intenta nuevamente en unos minutos";
+                this.messageService.add({
+                  key: "toastPortal",
+                  severity: "error",
+                  summary: this.msjError,
+                });
+              }
+            );
+      },
+      reject: () => {
+
+      }
+    });
+  }
 
   public generarKeys() {
     let msj = '¿Está seguro que desea generar su llave privada?'
@@ -149,10 +205,10 @@ export class PrincipalComponent implements OnInit {
     });
   }
 
-  
   public triggerPrivateKeyInput(): void {
     this.privateKeyInput.nativeElement.click();
   }
+
   public triggerFileInput(): void {
     this.fileInput.nativeElement.click();
   }
@@ -165,7 +221,6 @@ export class PrincipalComponent implements OnInit {
     }
   }
 
-
   public onPrivateKeySelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -173,10 +228,10 @@ export class PrincipalComponent implements OnInit {
         this.buttonLabelName = this.privateKey.name;
     }
   }
+
   private subirArchivos(files: File[]): void {
     const formData = new FormData();
     files.forEach(file => formData.append('files', file));
-
     this.digitalSignerService
         .saveFiles(this.jwt.jwt, formData)
             .subscribe(

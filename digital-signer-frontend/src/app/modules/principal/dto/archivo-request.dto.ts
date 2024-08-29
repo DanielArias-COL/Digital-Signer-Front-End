@@ -1,11 +1,13 @@
 export class ArchivoDTO {
 
+  public id: number;
+
   public name: string;
 
   public bytes: string;
 
   public integrityHash: string;
 
-  public isSigned: boolean;
+  public digitalSigned: string;
 
 }

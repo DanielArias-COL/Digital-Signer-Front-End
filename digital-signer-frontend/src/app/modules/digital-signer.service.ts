@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { SingInRequestDTO } from "./home/dto/sing-in-request.dto";
 import { HomeAPIConstant } from "../constants/home.constant";
+import { SignedFileDTO } from "./principal/dto/firmar-archivo-request.dto";
 
 @Injectable({
   providedIn: "root",
@@ -33,14 +34,16 @@ export class DigitalSignerService {
     return this.http.post<any>(HomeAPIConstant.URL_SUBIR_ARCHIVOS, files, { headers });
   }
 
-  public signedfiles(token : string, filesId: any): Observable<any> {
+  public signedfiles(token : string, request: SignedFileDTO): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('idFile', request.idFile.toString());
+    formData.append('privateKey', request.privateKey);
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token}`,
+      'enctype': 'multipart/form-data'
     });
-    return this.http.post<any>(HomeAPIConstant.URL_SUBIR_ARCHIVOS, filesId, { headers });
+    return this.http.post<any>(HomeAPIConstant.URL_FIRMAR_ARCHIVO, formData, { headers });
   }
-
-
 
   public listFiles(token : string): Observable<any> {
     const headers = new HttpHeaders({
