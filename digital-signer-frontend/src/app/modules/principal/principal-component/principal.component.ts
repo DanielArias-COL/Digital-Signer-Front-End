@@ -20,6 +20,7 @@ export class PrincipalComponent implements OnInit {
   public esGenerarKeys: boolean = false;
   public esListarDocumentos: boolean = false;
   public esFirmarDocumentos: boolean = false;
+  public esComprobarDocumentos: boolean = false;
   public jwt: JWTDTO;
   public archivosUsuario: ArchivoDTO[] = null;
   public rowsPerPageOptions: Array<number>;
@@ -80,18 +81,31 @@ export class PrincipalComponent implements OnInit {
     this.esFirmarDocumentos = true;
     this.esGenerarKeys = false;
     this.esListarDocumentos = false;
+    this.esComprobarDocumentos = false;
+  }
+
+  public mostrarModalConfirmarDocumentos() {    
+    if (!this.archivosUsuario || this.archivosUsuario.length === 0) {
+      this.listarArchivos();
+    }
+    this.esFirmarDocumentos = false;
+    this.esGenerarKeys = false;
+    this.esListarDocumentos = false;
+    this.esComprobarDocumentos = true;
   }
 
   public mostrarModalGenerarKeys() {
     this.esGenerarKeys = true;
     this.esFirmarDocumentos = false;
     this.esListarDocumentos = false;
+    this.esComprobarDocumentos = false;
   }
 
   public mostrarMenu() {
     this.esGenerarKeys = false;
     this.esFirmarDocumentos = false;
     this.esListarDocumentos = false;
+    this.esComprobarDocumentos = false;
   }
 
   public mostrarModalListarArchivos() {
@@ -100,6 +114,7 @@ export class PrincipalComponent implements OnInit {
         this.esFirmarDocumentos = false;
         this.esGenerarKeys = false;
         this.esListarDocumentos = true;
+        this.esComprobarDocumentos = false;
       }, 800);
   }
 
