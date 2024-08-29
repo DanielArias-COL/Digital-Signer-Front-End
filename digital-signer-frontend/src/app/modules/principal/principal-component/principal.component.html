@@ -120,7 +120,7 @@
       <div class="grid altura-subdiv"> 
         <div class="col-4 text-center"> </div>
         <div class="col-4 text-center">
-          <button (click)="generarKeys()" class="btn secondary">
+          <button [disabled]="desabilitarFirma()" (click)="generarKeys()" class="btn secondary">
             Firmar archivo
           </button>
         </div>
@@ -140,14 +140,14 @@
       <div class="ui-g-12 pt-0">
         <p-table 
           id="tblFile" 
-          #tblFile styleClass="tbl-app" 
+          #tblFile
           [value]="archivosUsuario"
           alwaysShowPaginator="true" 
           [rowsPerPageOptions]="rowsPerPageOptions"
+          [totalRecords]="archivosUsuario.length"
           [rows]="5" 
           [responsive]="true" 
-          [paginator]="false" 
-          [lazy]="true" 
+          [paginator]="true" 
           styleClass="tbl-app"
           [showCurrentPageReport]="true">
           <ng-template pTemplate="header">
@@ -158,16 +158,16 @@
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-file>
-            <tr style="text-align: center" >
-              <td class="text-center">{{ file.name }}</td>
-              <td class="text-center">
-                <i *ngIf="file.signed" class="lni lni-smile font-size-24 detalle icon-green"
+            <tr style="text-align: center; align-items: center;" >
+              <td class="td-center">{{ file.name }}</td>
+              <td class="td-center">
+                <i *ngIf="file.digitalSigned" class="lni lni-smile font-size-24 detalle icon-green"
                   title="Archivo firmado"></i>
-                <i *ngIf="!file.signed" class="lni lni-sad font-size-24 detalle icon-gray"
+                <i *ngIf="!file.digitalSigned" class="lni lni-sad font-size-24 detalle icon-gray"
                   title="Archivo sin firmar"></i>    
               </td>
-              <td class="text-center">
-                <i class="lni lni-pencil-alt font-size-24 detalle"
+              <td class="td-center">
+                <i (click)="mostrarModalFirmarDocumentos()" class="lni lni-pencil-alt font-size-24 detalle icono-lista-documento"
                   title="Firmar archivo"></i>
                 <i  class="lni lni-checkmark-circle font-size-24 pencil ml-3"
                   title="Confirmar archivo"></i>

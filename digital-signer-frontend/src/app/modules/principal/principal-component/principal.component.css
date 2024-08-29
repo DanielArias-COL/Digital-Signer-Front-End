@@ -238,3 +238,11 @@ a.sidebar-link:hover {
   flex-grow: 1;
   min-width: 0;
 }
+
+.icono-lista-documento {
+  cursor: pointer;
+}
+
+.td-center {
+  text-align: center;
+}

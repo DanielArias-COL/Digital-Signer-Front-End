@@ -27,7 +27,7 @@ export class PrincipalComponent implements OnInit {
   public items =  [];
   public filteredItems: any[] = [];
   public selectedItem: any;
-  public privateKey;
+  public privateKey = null;
 
   constructor(
     private router: Router,
@@ -46,7 +46,7 @@ export class PrincipalComponent implements OnInit {
    * Inicializa el componente.
    */
   ngOnInit(): void {
-    this.listarArchivos();
+
   }
 
   /**
@@ -56,6 +56,10 @@ export class PrincipalComponent implements OnInit {
    */
   public navigateTo(route: string, params?: any) {
     this.router.navigate([route], { state: params });
+  }
+
+  public desabilitarFirma(): boolean {    
+    return (this.selectedItem === undefined || this.privateKey === null);
   }
 
   public toggleSidebar() {
@@ -68,7 +72,10 @@ export class PrincipalComponent implements OnInit {
     );
   }
 
-  public mostrarModalFirmarDocumentos() {
+  public mostrarModalFirmarDocumentos() {    
+    if (!this.archivosUsuario || this.archivosUsuario.length === 0) {
+      this.listarArchivos();
+    }
     this.esFirmarDocumentos = true;
     this.esGenerarKeys = false;
     this.esListarDocumentos = false;
@@ -80,9 +87,12 @@ export class PrincipalComponent implements OnInit {
   }
 
   public mostrarModalListarArchivos() {
-    this.esFirmarDocumentos = false;
-    this.esGenerarKeys = false;
-    this.esListarDocumentos = true;
+    this.listarArchivos();      
+      setTimeout(() => {
+        this.esFirmarDocumentos = false;
+        this.esGenerarKeys = false;
+        this.esListarDocumentos = true;
+      }, 800);
   }
 
   private listarArchivos(): void {
@@ -90,7 +100,6 @@ export class PrincipalComponent implements OnInit {
     .listFiles(this.jwt.jwt)
     .subscribe(
       (res) => {
-        //console.log(res);
         this.archivosUsuario = res.listFiles;
         this.obtenerListaArchivosFD();
       }
