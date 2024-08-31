@@ -285,8 +285,7 @@ export class PrincipalComponent implements OnInit {
   }
 
   private generarArchivoPEM(encodedKey: string) {
-    const decodedKey = atob(encodedKey);
-    const pemKey = `-----BEGIN PRIVATE KEY-----\n${this.separarCadenaPEM(decodedKey, 64)}\n-----END PRIVATE KEY-----\n`;
+    const pemKey = `-----BEGIN PRIVATE KEY-----\n${this.separarCadenaPEM(encodedKey, 64)}\n-----END PRIVATE KEY-----\n`;
     const blob = new Blob([pemKey], { type: 'application/x-pem-file' });
 
     const link = document.createElement('a');

@@ -2,6 +2,6 @@ export class SignedFileDTO {
 
   public idFile: number;
 
-  public privateKey: any;
+  public privateKey: File;
 
 }

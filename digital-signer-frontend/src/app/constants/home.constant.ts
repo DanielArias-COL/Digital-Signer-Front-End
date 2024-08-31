@@ -9,9 +9,9 @@ export class HomeAPIConstant {
 
   static readonly URL_GENERATE_KEYS_USER: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/generateKeyPair";
 
-  static readonly URL_SUBIR_ARCHIVOS: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/saveFiles ";
+  static readonly URL_SUBIR_ARCHIVOS: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/saveFiles";
 
-  static readonly URL_LISTAR_ARCHIVOS: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/listFiles ";
+  static readonly URL_LISTAR_ARCHIVOS: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/listFiles";
 
-  static readonly URL_FIRMAR_ARCHIVO: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/signedFile ";
+  static readonly URL_FIRMAR_ARCHIVO: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/signedFile";
 }

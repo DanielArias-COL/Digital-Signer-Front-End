@@ -37,7 +37,8 @@ export class DigitalSignerService {
   public signedfiles(token : string, request: SignedFileDTO): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('idFile', request.idFile.toString());
-    formData.append('privateKey', request.privateKey);
+    formData.append('privateKeyFile', request.privateKey);
+    
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'enctype': 'multipart/form-data'
