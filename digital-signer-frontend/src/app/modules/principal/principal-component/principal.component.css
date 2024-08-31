@@ -234,6 +234,11 @@ a.sidebar-link:hover {
   align-items: center;
 }
 
+.altura-subdiv-confirm{
+  height: 50%;
+  align-items: center;
+}
+
 .custom-dropdown {
   flex-grow: 1;
   min-width: 0;

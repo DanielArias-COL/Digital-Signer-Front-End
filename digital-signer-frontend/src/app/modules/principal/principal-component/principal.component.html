@@ -130,7 +130,7 @@
 
     <!--Panel de comprobar documento-->
     <div *ngIf="esComprobarDocumentos" class="contenedor-firma text-center ui-g mt-3">
-      <div class="grid altura-subdiv ">
+      <div class="grid altura-subdiv-confirm ">
         <div class="col-2"></div>
         <div class="col-3 text-right"> 
             <label>Archivo a verificar:</label>
@@ -148,21 +148,10 @@
         </div>
         <div class="col-2"></div>
       </div>
-      <div class="grid altura-subdiv">
-        <div class="col-3"></div>
-        <div class="col-3 text-center"> 
-          <label for="">Adjunta tu llave privada:</label>
-        </div>
-        <div class="col-3 text-center">
-          <button (click)="triggerPrivateKeyInput()" class="btn secondary">{{buttonLabelName}}</button>
-          <input type="file" #privateKey style="display: none;" (change)="onPrivateKeySelected($event)" accept=".pem" multiple />
-       </div>
-       <div class="col-3"></div>
-      </div>
-      <div class="grid altura-subdiv"> 
+      <div class="grid altura-subdiv-confirm"> 
         <div class="col-4 text-center"> </div>
         <div class="col-4 text-center">
-          <button [disabled]="desabilitarFirma()" (click)="saveFile()" class="btn secondary">
+          <button [disabled]="desabilitarVerificacion()" (click)="verifyFile()" class="btn secondary">
             Verificar archivo
           </button>
         </div>

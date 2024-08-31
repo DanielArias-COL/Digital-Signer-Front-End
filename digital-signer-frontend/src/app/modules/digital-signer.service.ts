@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { SingInRequestDTO } from "./home/dto/sing-in-request.dto";
 import { HomeAPIConstant } from "../constants/home.constant";
 import { SignedFileDTO } from "./principal/dto/firmar-archivo-request.dto";
+import { VerifyFileRequestDTO } from "./principal/dto/verificar-archivo-request.dto";
 
 @Injectable({
   providedIn: "root",
@@ -51,5 +52,12 @@ export class DigitalSignerService {
       'Authorization': `Bearer ${token}`
     });
     return this.http.get<any>(HomeAPIConstant.URL_LISTAR_ARCHIVOS, { headers });
+  }
+
+  public verifyFiles(token : string, request: VerifyFileRequestDTO): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post<any>(HomeAPIConstant.URL_VERIFY_ARCHIVO, request, { headers });
   }
 }

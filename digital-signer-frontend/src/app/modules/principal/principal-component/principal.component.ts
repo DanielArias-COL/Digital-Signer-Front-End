@@ -5,6 +5,7 @@ import { ConfirmationService, MessageService } from "primeng/api";
 import { JWTDTO } from "src/app/dto/token-request.dto";
 import { ArchivoDTO } from "../dto/archivo-request.dto";
 import { SignedFileDTO } from "../dto/firmar-archivo-request.dto";
+import { VerifyFileRequestDTO } from "../dto/verificar-archivo-request.dto";
 
 @Component({
   templateUrl: "./principal.component.html",
@@ -62,6 +63,10 @@ export class PrincipalComponent implements OnInit {
 
   public desabilitarFirma(): boolean {    
     return (this.selectedItem === undefined || this.privateKey === null);
+  }
+
+  public desabilitarVerificacion(): boolean {    
+    return (this.selectedItem === undefined);
   }
 
   public toggleSidebar() {
@@ -178,6 +183,54 @@ export class PrincipalComponent implements OnInit {
               },
               (error) => {
                 this.msjError = "Se presento un error generando las llaves, intenta nuevamente en unos minutos";
+                this.messageService.add({
+                  key: "toastPortal",
+                  severity: "error",
+                  summary: this.msjError,
+                });
+              }
+            );
+      },
+      reject: () => {
+
+      }
+    });
+  }
+
+  public verifyFile() {    
+    let msj = '¿Está seguro que desea verificar su documento?'
+    this.confirmationService.confirm({
+      message: msj,
+      header: "Confirmar Documento",
+      accept: () => { 
+        let request = new VerifyFileRequestDTO();
+        request.idFile=this.selectedItem.id;
+        this.digitalSignerService
+        .verifyFiles(this.jwt.jwt, request)
+            .subscribe(
+              (res) => {
+                if (res.error 
+                  && res.error.errorCode
+                  && res.error.errorCode === "200"
+                ) {
+                  this.msjError = "Tu archivo se encuentra correcto";
+                  this.messageService.add({
+                    key: "toastPortal",
+                    severity: "success",
+                    summary: this.msjError,
+                  });
+                } else {
+                  this.msjError = "Se presento un error confirmando tu archivo, intenta nuevamente en unos minutos";
+                  this.messageService.add({
+                    key: "toastPortal",
+                    severity: "error",
+                    summary: this.msjError,
+                  });
+                }
+                this.mostrarMenu();
+              },
+              (error) => {
+                this.msjError = "Se presento un error confirmando las llaves, intenta nuevamente en unos minutos";
                 this.messageService.add({
                   key: "toastPortal",
                   severity: "error",
