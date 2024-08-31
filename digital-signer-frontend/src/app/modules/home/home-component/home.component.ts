@@ -54,6 +54,10 @@ export class HomeComponent implements OnInit {
     return true;
   }
 
+  public desabilitarInicio(): boolean {    
+    return (!this.usuario || !this.clave);
+  }
+
   public iniciarSesion(): void {
     if (
       this.usuario &&
