@@ -11,6 +11,7 @@ import { SelectivePreload } from "./directives/preload/selective-preload";
 import { DigitalSignerService } from "./modules/digital-signer.service";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { LocationStrategy, PathLocationStrategy } from "@angular/common";
 
 
 /**
@@ -34,6 +35,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
       provide: HTTP_INTERCEPTORS,
       useClass: HttpRequestInterceptor,
       multi: true,
+    },
+    {
+      provide: LocationStrategy,
+      useClass: PathLocationStrategy
     },
     SelectivePreload,
     DigitalSignerService,
