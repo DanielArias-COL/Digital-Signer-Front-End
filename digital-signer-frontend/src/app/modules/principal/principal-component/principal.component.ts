@@ -22,11 +22,13 @@ export class PrincipalComponent implements OnInit {
   public esListarDocumentos: boolean = false;
   public esFirmarDocumentos: boolean = false;
   public esComprobarDocumentos: boolean = false;
+  public esLogo: boolean = true;
+  public esListarDocumentosCompartidos: boolean = false;
+
   public jwt: JWTDTO;
   public archivosUsuario: ArchivoDTO[] = null;
   public rowsPerPageOptions: Array<number>;
-  public buttonLabelName: string = 'Subir Archivo'
-  //public items = this.obtenerListaArchivosFD();
+  public buttonLabelName: string = 'Subir Archivo';
   public items =  [];
   public filteredItems: any[] = [];
   public selectedItem: any;
@@ -83,6 +85,8 @@ export class PrincipalComponent implements OnInit {
     if (!this.archivosUsuario || this.archivosUsuario.length === 0) {
       this.listarArchivos();
     }
+    this.esLogo = false;
+    this.esListarDocumentosCompartidos = false;
     this.esFirmarDocumentos = true;
     this.esGenerarKeys = false;
     this.esListarDocumentos = false;
@@ -93,6 +97,8 @@ export class PrincipalComponent implements OnInit {
     if (!this.archivosUsuario || this.archivosUsuario.length === 0) {
       this.listarArchivos();
     }
+    this.esLogo = false;
+    this.esListarDocumentosCompartidos = false;
     this.esFirmarDocumentos = false;
     this.esGenerarKeys = false;
     this.esListarDocumentos = false;
@@ -100,6 +106,8 @@ export class PrincipalComponent implements OnInit {
   }
 
   public mostrarModalGenerarKeys() {
+    this.esLogo = false;
+    this.esListarDocumentosCompartidos = false;
     this.esGenerarKeys = true;
     this.esFirmarDocumentos = false;
     this.esListarDocumentos = false;
@@ -107,6 +115,8 @@ export class PrincipalComponent implements OnInit {
   }
 
   public mostrarMenu() {
+    this.esLogo = false;
+    this.esListarDocumentosCompartidos = false;
     this.esGenerarKeys = false;
     this.esFirmarDocumentos = false;
     this.esListarDocumentos = false;
@@ -116,6 +126,20 @@ export class PrincipalComponent implements OnInit {
   public mostrarModalListarArchivos() {
     this.listarArchivos();      
       setTimeout(() => {
+        this.esLogo = false;
+        this.esListarDocumentosCompartidos = false;
+        this.esFirmarDocumentos = false;
+        this.esGenerarKeys = false;
+        this.esListarDocumentos = true;
+        this.esComprobarDocumentos = false;
+      }, 800);
+  }
+
+  public mostrarModalListarArchivosCompartidos() {
+    this.listarArchivos();      
+      setTimeout(() => {
+        this.esLogo = false;
+        this.esListarDocumentosCompartidos = false;
         this.esFirmarDocumentos = false;
         this.esGenerarKeys = false;
         this.esListarDocumentos = true;

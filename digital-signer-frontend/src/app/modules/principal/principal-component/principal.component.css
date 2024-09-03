@@ -251,3 +251,23 @@ a.sidebar-link:hover {
 .td-center {
   text-align: center;
 }
+
+.img-createUser {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  height: 100%; 
+}
+
+.logo-home {
+  width: 620px;
+  height: 620px;
+  object-fit: contain; 
+  margin-bottom: 15%;
+}
+
+.logo-text{
+  margin-bottom: 10%; 
+  margin-right: 5%;
+  font-family: Verdana, sans-serif;
+}

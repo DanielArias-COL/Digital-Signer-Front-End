@@ -30,6 +30,15 @@
     background-color: #ffffff;
     z-index: 1;
   }
+
+  .pnl-4 {
+    width: 80%;
+    height: 550px;
+    border-radius: 25px;
+    box-shadow: 0 0 11px 0 rgba(0, 0, 0, 0.16);
+    background-color: #ffffff;
+    z-index: 1;
+  }
   
   @media(min-width:768px) {
     .pnl-2 {
@@ -45,6 +54,14 @@
   .img-login {
     text-align: center;
     padding-top: 10%;
+  }
+
+  .container-no-top {
+    margin-top: -2rem !important;
+  }
+
+  .img-createUser {
+    text-align: center;
   }
   
   .logo-login {

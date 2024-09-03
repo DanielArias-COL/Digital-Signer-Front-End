@@ -80,11 +80,11 @@
     </form>
   </div>
 
-    <!-- panel formulario registrar usuario -->
-    <div *ngIf="!initSesion" class="pnl-2">
+  <!-- panel formulario registrar usuario -->
+  <div *ngIf="!initSesion" class="pnl-2">
 
     <!-- panel imagen -->
-    <div class="img-login">
+    <div class="img-createUser">
       <img srcset="assets/register/register-sf.png" class="logo-login"/>
     </div>
 
@@ -94,7 +94,7 @@
     novalidate>
   
     <!-- panel ingreso informacion -->
-    <div class="ui-g container">
+    <div class="ui-g container container-no-top">
 
   
     <!-- titulo -->
@@ -118,6 +118,21 @@
       </div>
     </div>
 
+    <!-- Correo usuario -->
+    <div class="grid mt-3 input-form">
+      <div class="inner-addon left-addon">
+        <i class="fa fa-user font-size-16 aico"></i>
+          <input
+          [(ngModel)]="usuario"
+          type="text"
+          id="username"
+          name="username"
+          autocomplete="off"
+          appAutofocus
+          class="w-100"
+          placeholder="Email"/>
+      </div>
+    </div>
 
     <!-- contraseña nuevo usuario -->
     <div class="grid input-form">
