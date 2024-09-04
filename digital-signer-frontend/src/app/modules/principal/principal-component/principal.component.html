@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div  class="wrapper">
   <aside id="sidebar" [class.expand]="isSidebarExpanded">
     <div class="d-flex">
       <button class="toggle-btn" type="button" (click)="toggleSidebar()">
@@ -180,7 +180,7 @@
     <!-- Panel de lisar documentos -->
     <div *ngIf="esListarDocumentos" class="text-center">
 
-      <div class="btn-subir-archivo text-center">
+      <div class="btn-subir-archivo text-center"> 
         <button (click)="triggerFileInput()" class="btn secondary">Subir archivo</button>
         <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)" multiple />
       </div>
@@ -202,7 +202,7 @@
           <ng-template pTemplate="header">
             <tr style="text-align: center">
               <th class="pt-0; text-center" style="width: 33.33%;">Nombre</th>
-              <th class="pt-0; text-center" style="width: 33.3%;">¿Esta firmado?</th>
+              <th class="pt-0; text-center" style="width: 33.3%;">Estado del documento</th>
               <th class="pt-0; text-center" style="width: 33.3%;">Opciones</th>
             </tr>
           </ng-template>
@@ -220,6 +220,32 @@
                   title="Firmar archivo"></i>
                 <i  class="lni lni-checkmark-circle font-size-24 pencil ml-3"
                   title="Confirmar archivo"></i>
+                <i (click)="op.toggle($event)" 
+                  class="lni lni-share font-size-24 pencil ml-3 detalle icono-lista-documento"
+                  title="Compartir documento"></i>  
+
+                <p-overlayPanel #op>
+                  <div class="flex flex-column gap-3 w-25rem">
+                    <!-- Contenido del overlay -->
+                    <p>Contenido del modal de compartir documentos.</p>
+                    <div class="col-5 text-center">
+                      <p-autoComplete 
+                        [suggestions]="filteredItemsCompartir" 
+                        (completeMethod)="searchCompartir($event)" 
+                        field="email"
+                        [dropdown]="true"
+                        [(ngModel)]="selectedItemUsuarios"
+                        placeholder="Seleccione un archivo"
+                        emptyMessage="No se encontraron archivos"
+                      ></p-autoComplete>
+                    </div>
+                    <div class="flex">
+                      <p-button label="Invite" icon="pi pi-users" />
+                  </div>
+                  </div>    
+                </p-overlayPanel>
+              
+
               </td>
             </tr>
           </ng-template>
@@ -237,9 +263,7 @@
           </ng-template>
         </p-table>
       </div>
-    </div>
-
-    
+    </div>    
     <!-- Panel de lisar documentos copartido conmigo -->
     <div *ngIf="esListarDocumentosCompartidos" class="text-center">
 
@@ -311,7 +335,6 @@
     <button class="" type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
   </p-footer>
 </p-confirmDialog>
-
 
 <!-- Estructura de mensajes de alerta -->
 <p-toast position="bottom-center" key="toastPortal" id="toastPortal" #toastPortal></p-toast>

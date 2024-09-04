@@ -54,6 +54,13 @@ export class DigitalSignerService {
     return this.http.get<any>(HomeAPIConstant.URL_LISTAR_ARCHIVOS, { headers });
   }
 
+  public listUsers(token : string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<any>(HomeAPIConstant.URL_LISTAR_USUARIOS, { headers });
+  }
+  
   public verifyFiles(token : string, request: VerifyFileRequestDTO): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`

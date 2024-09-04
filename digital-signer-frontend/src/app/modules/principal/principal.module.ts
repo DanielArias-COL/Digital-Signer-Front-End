@@ -9,6 +9,7 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { TableModule } from "primeng/table";
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     ConfirmDialogModule,
     TableModule,
     DropdownModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    OverlayPanelModule
   ],
   declarations: [PrincipalComponent],
   providers: [

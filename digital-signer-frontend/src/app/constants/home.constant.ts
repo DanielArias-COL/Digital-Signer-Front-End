@@ -16,4 +16,6 @@ export class HomeAPIConstant {
   static readonly URL_FIRMAR_ARCHIVO: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/signedFile";
 
   static readonly URL_VERIFY_ARCHIVO: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/verifyFile";
+
+  static readonly URL_LISTAR_USUARIOS: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/listShareUsers";
 }

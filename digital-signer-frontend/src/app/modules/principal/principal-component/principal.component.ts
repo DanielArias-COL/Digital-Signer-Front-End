@@ -1,11 +1,14 @@
 import { Router } from "@angular/router";
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild, inject } from "@angular/core";
 import { DigitalSignerService } from "../../digital-signer.service";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { JWTDTO } from "src/app/dto/token-request.dto";
 import { ArchivoDTO } from "../dto/archivo-request.dto";
 import { SignedFileDTO } from "../dto/firmar-archivo-request.dto";
 import { VerifyFileRequestDTO } from "../dto/verificar-archivo-request.dto";
+import { OverlayPanel } from 'primeng/overlaypanel';
+import { UsuarioDTO } from "../dto/usuario.dto";
+
 
 @Component({
   templateUrl: "./principal.component.html",
@@ -16,6 +19,8 @@ export class PrincipalComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
   @ViewChild('privateKey') privateKeyInput: ElementRef<HTMLInputElement>;
+  @ViewChild('op') overlayPanel: OverlayPanel;
+
   public isSidebarExpanded : boolean = false;
   public msjError: string = "";
   public esGenerarKeys: boolean = false;
@@ -27,24 +32,33 @@ export class PrincipalComponent implements OnInit {
 
   public jwt: JWTDTO;
   public archivosUsuario: ArchivoDTO[] = null;
+  public listaUsuarios: UsuarioDTO[] = [];
   public rowsPerPageOptions: Array<number>;
   public buttonLabelName: string = 'Subir Archivo';
+  public privateKey = null;
+
   public items =  [];
   public filteredItems: any[] = [];
   public selectedItem: any;
-  public privateKey = null;
 
+  public itemsCompartir =  [];
+  public filteredItemsCompartir: any[] = [];
+  public selectedItemUsuarios: any;
+  
   constructor(
+    
     private router: Router,
     private digitalSignerService: DigitalSignerService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    
   ) {
       const navigation = this.router.getCurrentNavigation();
       const state = navigation?.extras.state as {
         data: JWTDTO;
       }
       this.jwt = state.data;
+      //this.inicializarUsuario()
     }
 
   /**
@@ -73,6 +87,13 @@ export class PrincipalComponent implements OnInit {
 
   public toggleSidebar() {
     this.isSidebarExpanded = !this.isSidebarExpanded;
+  }
+
+  public searchCompartir(event: any): void {
+    // Filtra los elementos de itemsCompartir basándote en la consulta ingresada
+    this.filteredItemsCompartir = this.itemsCompartir.filter(item =>
+      item.email.toLowerCase().includes(event.query.toLowerCase())
+    );
   }
 
   public search(event) {
@@ -124,7 +145,8 @@ export class PrincipalComponent implements OnInit {
   }
 
   public mostrarModalListarArchivos() {
-    this.listarArchivos();      
+    this.listarArchivos();
+    this.listarUsuarios();      
       setTimeout(() => {
         this.esLogo = false;
         this.esListarDocumentosCompartidos = false;
@@ -158,6 +180,17 @@ export class PrincipalComponent implements OnInit {
     );
   }
 
+  public listarUsuarios(){
+    this.digitalSignerService
+    .listUsers(this.jwt.jwt)
+    .subscribe(
+      (res) => {
+        this.listaUsuarios = res.users;
+        this.obtenerListaUsuariosPAutoC();
+      }
+    );
+  }
+
   private obtenerListaArchivosFD(): void {
     let contador: number = 0;
     let items: { id: number; name: string }[] = [];
@@ -170,6 +203,17 @@ export class PrincipalComponent implements OnInit {
     
     this.items = items;
     
+  }
+
+  private obtenerListaUsuariosPAutoC(){
+    let items: { email: string }[] = [];
+
+    for(const row of this.listaUsuarios){
+        const item = { email: row.email};
+        items.push(item);
+    }
+    
+    this.itemsCompartir = items;
   }
 
   public saveFile() {    
@@ -303,6 +347,10 @@ export class PrincipalComponent implements OnInit {
 
   public triggerFileInput(): void {
     this.fileInput.nativeElement.click();
+  }
+
+  toggleOverlay(event: Event) {
+    this.overlayPanel.toggle(event);
   }
 
   public onFileSelected(event: Event): void {
