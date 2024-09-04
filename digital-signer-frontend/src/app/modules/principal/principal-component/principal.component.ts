@@ -8,6 +8,7 @@ import { SignedFileDTO } from "../dto/firmar-archivo-request.dto";
 import { VerifyFileRequestDTO } from "../dto/verificar-archivo-request.dto";
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { UsuarioDTO } from "../dto/usuario.dto";
+import { CompartirUsuarioDTO } from "../dto/compartir-usuario-request.dto";
 
 
 @Component({
@@ -36,6 +37,9 @@ export class PrincipalComponent implements OnInit {
   public rowsPerPageOptions: Array<number>;
   public buttonLabelName: string = 'Subir Archivo';
   public privateKey = null;
+  public usuarioEnSesion: any;
+
+  public itemsSeleccionadosListaArchivos: ArchivoDTO;
 
   public items =  [];
   public filteredItems: any[] = [];
@@ -56,9 +60,10 @@ export class PrincipalComponent implements OnInit {
       const navigation = this.router.getCurrentNavigation();
       const state = navigation?.extras.state as {
         data: JWTDTO;
+        user: string;
       }
       this.jwt = state.data;
-      //this.inicializarUsuario()
+      this.usuarioEnSesion = state.user;
     }
 
   /**
@@ -136,7 +141,7 @@ export class PrincipalComponent implements OnInit {
   }
 
   public mostrarMenu() {
-    this.esLogo = false;
+    this.esLogo = true;
     this.esListarDocumentosCompartidos = false;
     this.esGenerarKeys = false;
     this.esFirmarDocumentos = false;
@@ -265,6 +270,59 @@ export class PrincipalComponent implements OnInit {
     });
   }
 
+  public compartirDocumento() {    
+    let request = new CompartirUsuarioDTO();
+        request.idFile=this.itemsSeleccionadosListaArchivos.id;
+        request.idUserTarget=this.findIdForUser(this.selectedItemUsuarios.email);
+        console.log("id: "+request.idFile + " idUserTarget: "+request.idUserTarget);
+        this.digitalSignerService
+        .shareFile(this.jwt.jwt, request)
+            .subscribe(
+              (res) => {
+                console.log(res);
+                if (res.error 
+                  && res.error.errorCode
+                  && res.error.errorCode === "200"
+                ) {
+                  this.msjError = "Tu archivo se compartió con exito";
+                  this.messageService.add({
+                    key: "toastPortal",
+                    severity: "success",
+                    summary: this.msjError,
+                  });
+                } else {
+                  this.msjError = "Se presento un error al compartir el documento";
+                  this.messageService.add({
+                    key: "toastPortal",
+                    severity: "error",
+                    summary: this.msjError,
+                  });
+                }
+                this.mostrarMenu();
+              },
+              (error) => {
+                this.msjError = "Se presento un error al compartir el documento";
+                this.messageService.add({
+                  key: "toastPortal",
+                  severity: "error",
+                  summary: this.msjError,
+                });
+              }
+            );
+  }
+
+  public findIdForUser(email: string): number {
+    let salida = 0;
+
+    for (const usuario of this.listaUsuarios) {
+        if (usuario.email === email) {
+            salida = usuario.id;
+            break; 
+        }
+    }
+
+    return salida;
+  }
   public verifyFile() {    
     let msj = '¿Está seguro que desea verificar su documento?'
     this.confirmationService.confirm({

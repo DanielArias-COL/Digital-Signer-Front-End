@@ -190,15 +190,17 @@
         <p-table 
           id="tblFile" 
           #tblFile
-          [value]="archivosUsuario"
+          [value]="archivosUsuario" 
+          [(selection)]="itemsSeleccionadosListaArchivos" 
+          selectionMode="single" 
           alwaysShowPaginator="true" 
           [rowsPerPageOptions]="rowsPerPageOptions"
           [totalRecords]="archivosUsuario.length"
           [rows]="5" 
           [responsive]="true" 
           [paginator]="true" 
-          styleClass="tbl-app"
           [showCurrentPageReport]="true">
+          
           <ng-template pTemplate="header">
             <tr style="text-align: center">
               <th class="pt-0; text-center" style="width: 33.33%;">Nombre</th>
@@ -206,8 +208,9 @@
               <th class="pt-0; text-center" style="width: 33.3%;">Opciones</th>
             </tr>
           </ng-template>
+          
           <ng-template pTemplate="body" let-file>
-            <tr style="text-align: center; align-items: center;" >
+            <tr [pSelectableRow]="file" style="text-align: center; align-items: center;">
               <td class="td-center">{{ file.name }}</td>
               <td class="td-center">
                 <i *ngIf="file.digitalSigned" class="lni lni-smile font-size-24 detalle icon-green"
@@ -228,40 +231,40 @@
                   <div class="flex flex-column gap-3 w-25rem">
                     <!-- Contenido del overlay -->
                     <p>Contenido del modal de compartir documentos.</p>
-                    <div class="col-5 text-center">
+                    <div class="col-12 text-center">
                       <p-autoComplete 
                         [suggestions]="filteredItemsCompartir" 
                         (completeMethod)="searchCompartir($event)" 
                         field="email"
                         [dropdown]="true"
                         [(ngModel)]="selectedItemUsuarios"
-                        placeholder="Seleccione un archivo"
-                        emptyMessage="No se encontraron archivos"
+                        placeholder="Seleccione un usuario"
+                        emptyMessage="No se encontraron usuarios"
                       ></p-autoComplete>
                     </div>
-                    <div class="flex">
-                      <p-button label="Invite" icon="pi pi-users" />
-                  </div>
+                    <div class="text-center">
+                      <button  (click)="compartirDocumento()" class="btn secondary">Compartir</button>
+                    </div>
                   </div>    
                 </p-overlayPanel>
-              
-
               </td>
             </tr>
           </ng-template>
+          
           <ng-template pTemplate="emptymessage">
             <tr>
               <td [attr.colspan]="7">
                 <div class="mr-2 ml-2 mt-2 mb-2 ui-messages ui-messages-info ui-corner-all p-2">
                   <span class="ui-messages-icon pi pi-info-circle"></span>
                   <span class="ui-messages-detail font-size-15 mt-1">
-                    Aun no has cargado documentos
+                    Aún no has cargado documentos.
                   </span>
                 </div>
               </td>
             </tr>
           </ng-template>
         </p-table>
+
       </div>
     </div>    
     <!-- Panel de lisar documentos copartido conmigo -->

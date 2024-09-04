@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit {
             ) {
               let jwtdto: JWTDTO  = new  JWTDTO;
               jwtdto.jwt = res.jwt;
-              this.navigateTo("home/principal", {data: jwtdto});
+              this.navigateTo("home/principal", {data: jwtdto, user: request.user});
             } else {
               this.msjError = "Credenciales invalidas";
               this.messageService.add({
