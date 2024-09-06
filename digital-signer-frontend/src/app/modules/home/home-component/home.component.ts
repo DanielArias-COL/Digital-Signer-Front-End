@@ -61,7 +61,6 @@ export class HomeComponent implements OnInit {
   }
 
   public iniciarSesion(): void {
-    this.authGoogleService.login();
     if (
       this.usuario &&
       this.clave

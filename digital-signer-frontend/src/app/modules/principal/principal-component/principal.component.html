@@ -41,10 +41,10 @@
             <a (click)="mostrarModalGenerarKeys()" class="sidebar-link">Generar llaves</a>
           </li>
           <li class="sidebar-item">
-            <a (click)="mostrarModalFirmarDocumentos()" class="sidebar-link">Firmar documento</a>
+            <a (click)="mostrarModalFirmarDocumentos('Herramientas')" class="sidebar-link">Firmar documento</a>
           </li>
           <li class="sidebar-item">
-            <a (click)="mostrarModalConfirmarDocumentos()" class="sidebar-link">Verificar documento</a>
+            <a (click)="mostrarModalConfirmarDocumentos('Herramientas')" class="sidebar-link">Verificar documento</a>
           </li>
         </ul>
       </li>
@@ -212,17 +212,12 @@
           <ng-template pTemplate="body" let-file>
             <tr [pSelectableRow]="file" style="text-align: center; align-items: center;">
               <td class="td-center">{{ file.name }}</td>
+              <td class="td-center">{{file.stateMessage}}</td>
               <td class="td-center">
-                <i *ngIf="file.digitalSigned" class="lni lni-smile font-size-24 detalle icon-green"
-                  title="Archivo firmado"></i>
-                <i *ngIf="!file.digitalSigned" class="lni lni-sad font-size-24 detalle icon-gray"
-                  title="Archivo sin firmar"></i>    
-              </td>
-              <td class="td-center">
-                <i (click)="mostrarModalFirmarDocumentos()" class="lni lni-pencil-alt font-size-24 detalle icono-lista-documento"
+                <i (click)="mostrarModalFirmarDocumentos('listarDocumentos')" class="lni lni-pencil-alt font-size-24 detalle icono-lista-documento"
                   title="Firmar archivo"></i>
-                <i  class="lni lni-checkmark-circle font-size-24 pencil ml-3"
-                  title="Confirmar archivo"></i>
+                <i (click)="mostrarModalConfirmarDocumentos('listarDocumentos')" class="lni lni-checkmark-circle font-size-24 pencil ml-3"
+                  title="Verificar archivo"></i>
                 <i (click)="op.toggle($event)" 
                   class="lni lni-share font-size-24 pencil ml-3 detalle icono-lista-documento"
                   title="Compartir documento"></i>  
@@ -302,7 +297,7 @@
                   title="Archivo sin firmar"></i>    
               </td>
               <td class="td-center">
-                <i (click)="mostrarModalFirmarDocumentos()" class="lni lni-pencil-alt font-size-24 detalle icono-lista-documento"
+                <i (click)="mostrarModalFirmarDocumentos('listarDocumentos')" class="lni lni-pencil-alt font-size-24 detalle icono-lista-documento"
                   title="Firmar archivo"></i>
                 <i  class="lni lni-checkmark-circle font-size-24 pencil ml-3"
                   title="Confirmar archivo"></i>

@@ -146,10 +146,16 @@ export class PrincipalComponent implements OnInit {
     );
   }
 
-  public mostrarModalFirmarDocumentos() {    
+  public mostrarModalFirmarDocumentos( origenInvocacio ?: string ) {   
+
     if (!this.archivosUsuario || this.archivosUsuario.length === 0) {
       this.listarArchivos();
     }
+
+    if(origenInvocacio === 'listarDocumentos' ){
+      this.selectedItem = this.buscarItemPorNombre(this.itemsSeleccionadosListaArchivos.name);
+    }
+
     this.esLogo = false;
     this.esListarDocumentosCompartidos = false;
     this.esFirmarDocumentos = true;
@@ -158,9 +164,13 @@ export class PrincipalComponent implements OnInit {
     this.esComprobarDocumentos = false;
   }
 
-  public mostrarModalConfirmarDocumentos() {    
+  public mostrarModalConfirmarDocumentos( origenInvocacio ?: string ) {    
     if (!this.archivosUsuario || this.archivosUsuario.length === 0) {
       this.listarArchivos();
+    }
+
+    if(origenInvocacio === 'listarDocumentos' ){
+      this.selectedItem = this.buscarItemPorNombre(this.itemsSeleccionadosListaArchivos.name);
     }
     this.esLogo = false;
     this.esListarDocumentosCompartidos = false;
@@ -261,6 +271,10 @@ export class PrincipalComponent implements OnInit {
     }
     
     this.itemsCompartidos = items;
+  }
+
+  private buscarItemPorNombre(nombre: string): { id: number; name: string } | undefined {
+    return this.items.find(item => item.name === nombre);
   }
 
   private obtenerListaUsuariosPAutoC(){
