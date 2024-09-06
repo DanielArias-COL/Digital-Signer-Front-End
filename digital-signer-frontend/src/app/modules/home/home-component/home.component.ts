@@ -5,6 +5,7 @@ import { NgForm } from "@angular/forms";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { SingInRequestDTO } from "../dto/sing-in-request.dto";
 import { JWTDTO } from "src/app/dto/token-request.dto";
+import { AuthGoogleService } from "src/app/auth-google.service";
 
 
 @Component({
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit {
     private digitalSignerService: DigitalSignerService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private authGoogleService: AuthGoogleService
   ) { }
 
   /**
@@ -59,6 +61,7 @@ export class HomeComponent implements OnInit {
   }
 
   public iniciarSesion(): void {
+    this.authGoogleService.login();
     if (
       this.usuario &&
       this.clave
@@ -103,6 +106,10 @@ export class HomeComponent implements OnInit {
         summary: this.msjError,
       });
     }
+  }
+
+  public iniciarGoogle(): void {
+    this.authGoogleService.login();
   }
 
   public regresarHome() {

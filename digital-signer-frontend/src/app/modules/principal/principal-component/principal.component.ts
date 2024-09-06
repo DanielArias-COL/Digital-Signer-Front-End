@@ -9,6 +9,7 @@ import { VerifyFileRequestDTO } from "../dto/verificar-archivo-request.dto";
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { UsuarioDTO } from "../dto/usuario.dto";
 import { CompartirUsuarioDTO } from "../dto/compartir-usuario-request.dto";
+import { AuthGoogleService } from "src/app/auth-google.service";
 
 
 @Component({
@@ -50,21 +51,34 @@ export class PrincipalComponent implements OnInit {
   public selectedItemUsuarios: any;
   
   constructor(
-    
     private router: Router,
     private digitalSignerService: DigitalSignerService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    
+    private authGoogleService: AuthGoogleService
   ) {
-      const navigation = this.router.getCurrentNavigation();
-      const state = navigation?.extras.state as {
-        data: JWTDTO;
-        user: string;
-      }
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state as {
+      data: JWTDTO;
+      user: string;
+    }
+  
+    if (state && state.data) {
       this.jwt = state.data;
       this.usuarioEnSesion = state.user;
+    } else {  
+      this.authGoogleService.getProfile().then(profile => {
+        if (profile) {
+          const dataUser = JSON.stringify(profile);
+          const email = profile['email'];
+        } else {
+          console.log("El perfil del usuario no está disponible.");
+        }
+      }).catch(err => {
+        console.error("Error al obtener el perfil del usuario:", err);
+      });
     }
+  }
 
   /**
    * Inicializa el componente.

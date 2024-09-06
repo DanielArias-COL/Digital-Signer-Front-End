@@ -12,6 +12,7 @@ import { DigitalSignerService } from "./modules/digital-signer.service";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { LocationStrategy, PathLocationStrategy } from "@angular/common";
+import { OAuthModule } from "angular-oauth2-oidc";
 
 
 /**
@@ -27,7 +28,8 @@ import { LocationStrategy, PathLocationStrategy } from "@angular/common";
     }),
     HttpClientModule,
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    OAuthModule.forRoot()
   ],
   exports: [RouterModule],
   providers: [
