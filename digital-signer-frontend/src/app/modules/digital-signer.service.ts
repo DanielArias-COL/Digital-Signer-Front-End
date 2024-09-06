@@ -6,6 +6,7 @@ import { HomeAPIConstant } from "../constants/home.constant";
 import { SignedFileDTO } from "./principal/dto/firmar-archivo-request.dto";
 import { VerifyFileRequestDTO } from "./principal/dto/verificar-archivo-request.dto";
 import { CompartirUsuarioDTO } from "./principal/dto/compartir-usuario-request.dto";
+import { GoogleSingInRequestDTO } from "./home/dto/google-sing-in-request.dto";
 
 @Injectable({
   providedIn: "root",
@@ -23,6 +24,10 @@ export class DigitalSignerService {
 
   public iniciarSesion(request: SingInRequestDTO): Observable<any> {
     return this.http.post<any>(HomeAPIConstant.URL_SING_IN, request);
+  }
+
+  public iniciarGoogle(request: GoogleSingInRequestDTO): Observable<any> {
+    return this.http.post<any>(HomeAPIConstant.URL_GOOGLE_SING_IN, request);
   }
 
   public createUser(request: SingInRequestDTO): Observable<any> {

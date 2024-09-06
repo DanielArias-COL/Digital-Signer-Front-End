@@ -10,6 +10,7 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 import { UsuarioDTO } from "../dto/usuario.dto";
 import { CompartirUsuarioDTO } from "../dto/compartir-usuario-request.dto";
 import { AuthGoogleService } from "src/app/auth-google.service";
+import { GoogleSingInRequestDTO } from "../../home/dto/google-sing-in-request.dto";
 
 
 @Component({
@@ -69,8 +70,8 @@ export class PrincipalComponent implements OnInit {
     } else {  
       this.authGoogleService.getProfile().then(profile => {
         if (profile) {
-          const dataUser = JSON.stringify(profile);
           const email = profile['email'];
+          this.iniciarSesionGoogle(email);
         } else {
           console.log("El perfil del usuario no está disponible.");
         }
@@ -94,6 +95,17 @@ export class PrincipalComponent implements OnInit {
    */
   public navigateTo(route: string, params?: any) {
     this.router.navigate([route], { state: params });
+  }
+
+  private listarArchivos(): void {
+    this.digitalSignerService
+    .listFiles(this.jwt.jwt)
+    .subscribe(
+      (res) => {
+        this.archivosUsuario = res.listFiles;
+        this.obtenerListaArchivosFD();
+      }
+    );
   }
 
   public desabilitarFirma(): boolean {    
@@ -188,13 +200,15 @@ export class PrincipalComponent implements OnInit {
       }, 800);
   }
 
-  private listarArchivos(): void {
+  private iniciarSesionGoogle(email: string): void {
+    let request = new GoogleSingInRequestDTO();
+    request.email = email;
     this.digitalSignerService
-    .listFiles(this.jwt.jwt)
+    .iniciarGoogle(request)
     .subscribe(
       (res) => {
-        this.archivosUsuario = res.listFiles;
-        this.obtenerListaArchivosFD();
+        this.jwt = new JWTDTO();
+        this.jwt.jwt = res.jwt;
       }
     );
   }
