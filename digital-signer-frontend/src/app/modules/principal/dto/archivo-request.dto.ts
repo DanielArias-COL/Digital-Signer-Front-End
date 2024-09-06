@@ -14,4 +14,6 @@ export class ArchivoDTO {
 
   public stateMessage: string;
 
+  public idUserSource: number;
+
 }
