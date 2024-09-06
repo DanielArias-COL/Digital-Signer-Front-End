@@ -10,4 +10,6 @@ export class ArchivoDTO {
 
   public digitalSigned: string;
 
+  public emailUserSource: string;
+
 }

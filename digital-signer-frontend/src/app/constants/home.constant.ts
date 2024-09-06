@@ -15,6 +15,8 @@ export class HomeAPIConstant {
 
   static readonly URL_LISTAR_ARCHIVOS: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/listFiles";
 
+  static readonly URL_LISTAR_ARCHIVOS_COMPARTIDOS: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/listMySharesFile";
+
   static readonly URL_FIRMAR_ARCHIVO: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/signedFile";
 
   static readonly URL_VERIFY_ARCHIVO: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/verifyFile";

@@ -61,14 +61,14 @@
         </ul>
       </li>
       <li class="sidebar-item">
-        <a (click)="mostrarModalListarArchivos()" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+        <a (click)="mostrarModalListarArchivosCompartidos()" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
           data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
           <i class="lni lni-slideshare"></i>
           <span>Compartido Conmigo</span>
         </a>
         <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
           <li class="sidebar-item">
-            <a (click)="mostrarModalListarArchivos()" class="sidebar-link">Compartido conmigo</a>
+            <a (click)="mostrarModalListarArchivosCompartidos()" class="sidebar-link">Compartido conmigo</a>
           </li>
         </ul>
       </li>
@@ -267,23 +267,18 @@
 
       </div>
     </div>    
-    <!-- Panel de lisar documentos copartido conmigo -->
+    <!-- Panel de lisar documentos copartidos conmigo -->
     <div *ngIf="esListarDocumentosCompartidos" class="text-center">
-
-      <div class="btn-subir-archivo text-center">
-        <button (click)="triggerFileInput()" class="btn secondary">Subir archivo</button>
-        <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)" multiple />
-      </div>
 
       <!-- tbl file -->
       <div class="ui-g-12 pt-0">
         <p-table 
           id="tblFile" 
           #tblFile
-          [value]="archivosUsuario"
+          [value]="archivoscompartidos"
           alwaysShowPaginator="true" 
           [rowsPerPageOptions]="rowsPerPageOptions"
-          [totalRecords]="archivosUsuario.length"
+          [totalRecords]="archivoscompartidos.length"
           [rows]="5" 
           [responsive]="true" 
           [paginator]="true" 
@@ -291,9 +286,10 @@
           [showCurrentPageReport]="true">
           <ng-template pTemplate="header">
             <tr style="text-align: center">
-              <th class="pt-0; text-center" style="width: 33.33%;">Nombre</th>
-              <th class="pt-0; text-center" style="width: 33.3%;">¿Esta firmado?</th>
-              <th class="pt-0; text-center" style="width: 33.3%;">Opciones</th>
+              <th class="pt-0; text-center" style="width: 25%;">Nombre</th>
+              <th class="pt-0; text-center" style="width: 25%;">¿Esta firmado?</th>
+              <th class="pt-0; text-center" style="width: 25%;">Opciones</th>
+              <th class="pt-0; text-center" style="width: 25%;">Compartido por</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-file>
@@ -311,6 +307,7 @@
                 <i  class="lni lni-checkmark-circle font-size-24 pencil ml-3"
                   title="Confirmar archivo"></i>
               </td>
+              <td class="td-center">{{ file.emailUserSource }}</td>
             </tr>
           </ng-template>
           <ng-template pTemplate="emptymessage">

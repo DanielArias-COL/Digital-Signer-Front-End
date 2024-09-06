@@ -34,7 +34,8 @@ export class PrincipalComponent implements OnInit {
   public esListarDocumentosCompartidos: boolean = false;
 
   public jwt: JWTDTO;
-  public archivosUsuario: ArchivoDTO[] = null;
+  public archivosUsuario: ArchivoDTO[] = [];
+  public archivoscompartidos: ArchivoDTO[] = [];
   public listaUsuarios: UsuarioDTO[] = [];
   public rowsPerPageOptions: Array<number>;
   public buttonLabelName: string = 'Subir Archivo';
@@ -44,6 +45,7 @@ export class PrincipalComponent implements OnInit {
   public itemsSeleccionadosListaArchivos: ArchivoDTO;
 
   public items =  [];
+  public itemsCompartidos =  [];
   public filteredItems: any[] = [];
   public selectedItem: any;
 
@@ -104,6 +106,17 @@ export class PrincipalComponent implements OnInit {
       (res) => {
         this.archivosUsuario = res.listFiles;
         this.obtenerListaArchivosFD();
+      }
+    );
+  }
+
+  private listarArchivosCompartidos(): void {
+    this.digitalSignerService
+    .listMySharesFile(this.jwt.jwt)
+    .subscribe(
+      (res) => {        
+        this.archivoscompartidos = res.listFiles;
+        this.obtenerListaArchivosCompartidos();
       }
     );
   }
@@ -189,13 +202,13 @@ export class PrincipalComponent implements OnInit {
   }
 
   public mostrarModalListarArchivosCompartidos() {
-    this.listarArchivos();      
+    this.listarArchivosCompartidos();      
       setTimeout(() => {
         this.esLogo = false;
-        this.esListarDocumentosCompartidos = false;
+        this.esListarDocumentosCompartidos = true;
         this.esFirmarDocumentos = false;
         this.esGenerarKeys = false;
-        this.esListarDocumentos = true;
+        this.esListarDocumentos = false;
         this.esComprobarDocumentos = false;
       }, 800);
   }
@@ -235,7 +248,19 @@ export class PrincipalComponent implements OnInit {
     }
     
     this.items = items;
+  }
+
+  private obtenerListaArchivosCompartidos(): void {
+    let contador: number = 0;
+    let items: { id: number; name: string }[] = [];
+
+    for(const row of this.archivoscompartidos){
+        const item = {id: row.id, name: row.name};
+        items.push(item);
+        contador++;
+    }
     
+    this.itemsCompartidos = items;
   }
 
   private obtenerListaUsuariosPAutoC(){
