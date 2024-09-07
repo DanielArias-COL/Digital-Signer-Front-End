@@ -90,10 +90,13 @@
     <div class="text-center">
       <h1 class="animated-title">Digital Signer</h1>
     </div>
+    
     <!-- Ventana Del logo -->
     <div *ngIf="esLogo" class="img-createUser">
-      <img srcset="assets/home/homeImage.jfif" class="logo-home"/>
-      <p class="logo-text">Este proyecto web está diseñado para facilitar la creación de firmas digitales seguras y la verificación de su autenticidad. En un entorno donde la seguridad de la información y la integridad de los documentos es crucial, nuestra solución proporciona una plataforma robusta para garantizar que las firmas electrónicas sean tanto confiables como legalmente vinculantes.</p>
+      <img src="assets/home/homeImage.jfif" alt="Logo Home" class="logo-home" />
+      <p class="logo-text">
+        Este proyecto web simplifica la creación y verificación de firmas digitales, asegurando que sean seguras, confiables y legalmente vinculantes en un entorno crítico para la integridad de la información y los documentos.
+      </p>
     </div>
 
 
@@ -139,6 +142,40 @@
         <div class="col-4 text-center"> </div>
         <div class="col-4 text-center">
           <button [disabled]="desabilitarFirma()" (click)="saveFile()" class="btn secondary">
+            Firmar archivo
+          </button>
+        </div>
+        <div class="col-4 text-center"> </div>
+      </div>
+    </div>
+
+    <!--Panel de firmar documento compartido-->
+    <div *ngIf="esFirmarDocumentoCompartido" class="contenedor-firma text-center ui-g mt-3">
+      <div class="grid altura-subdiv ">
+        <div class="col-2"></div>
+        <div class="col-3 text-right"> 
+            <label>Archivo a firmar:</label>
+        </div>
+        <div class="col-5 text-center">
+          <label>{{confirmarArchivoCompartido.name}}</label>
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="grid altura-subdiv">
+        <div class="col-3"></div>
+        <div class="col-3 text-center"> 
+          <label>Adjunta tu llave privada:</label>
+        </div>
+        <div class="col-3 text-center">
+          <button (click)="triggerPrivateKeyInput()" class="btn secondary">{{buttonLabelName}}</button>
+          <input type="file" #privateKey style="display: none;" (change)="onPrivateKeySelected($event)" accept=".pem" multiple />
+       </div>
+       <div class="col-3"></div>
+      </div>
+      <div class="grid altura-subdiv"> 
+        <div class="col-4 text-center"> </div>
+        <div class="col-4 text-center">
+          <button [disabled]="desabilitarFirmaCompartida()" (click)="saveFileShare()" class="btn secondary">
             Firmar archivo
           </button>
         </div>
@@ -297,7 +334,7 @@
                   title="Archivo sin firmar"></i>    
               </td>
               <td class="td-center">
-                <i (click)="mostrarModalFirmarDocumentos('listarDocumentos')" class="lni lni-pencil-alt font-size-24 detalle icono-lista-documento"
+                <i (click)="mostrarModalConfirmarDocumentoCompartido(file)" class="lni lni-pencil-alt font-size-24 detalle icono-lista-documento"
                   title="Firmar archivo"></i>
                 <i  class="lni lni-checkmark-circle font-size-24 pencil ml-3"
                   title="Confirmar archivo"></i>

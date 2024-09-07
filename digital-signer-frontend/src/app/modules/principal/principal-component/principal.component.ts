@@ -11,6 +11,7 @@ import { UsuarioDTO } from "../dto/usuario.dto";
 import { CompartirUsuarioDTO } from "../dto/compartir-usuario-request.dto";
 import { AuthGoogleService } from "src/app/auth-google.service";
 import { GoogleSingInRequestDTO } from "../../home/dto/google-sing-in-request.dto";
+import { SignedFileShareDTO } from "../dto/firmar-archivo-compartido-request.dto";
 
 
 @Component({
@@ -32,6 +33,7 @@ export class PrincipalComponent implements OnInit {
   public esComprobarDocumentos: boolean = false;
   public esLogo: boolean = true;
   public esListarDocumentosCompartidos: boolean = false;
+  public esFirmarDocumentoCompartido: boolean = false;
 
   public jwt: JWTDTO;
   public archivosUsuario: ArchivoDTO[] = [];
@@ -52,6 +54,7 @@ export class PrincipalComponent implements OnInit {
   public itemsCompartir =  [];
   public filteredItemsCompartir: any[] = [];
   public selectedItemUsuarios: any;
+  public confirmarArchivoCompartido = new ArchivoDTO();
   
   constructor(
     private router: Router,
@@ -125,6 +128,10 @@ export class PrincipalComponent implements OnInit {
     return (this.selectedItem === undefined || this.privateKey === null);
   }
 
+  public desabilitarFirmaCompartida(): boolean {    
+    return (this.confirmarArchivoCompartido.name === null || this.privateKey === null);
+  }
+
   public desabilitarVerificacion(): boolean {    
     return (this.selectedItem === undefined);
   }
@@ -162,6 +169,7 @@ export class PrincipalComponent implements OnInit {
     this.esGenerarKeys = false;
     this.esListarDocumentos = false;
     this.esComprobarDocumentos = false;
+    this.esFirmarDocumentoCompartido = false;
   }
 
   public mostrarModalConfirmarDocumentos( origenInvocacio ?: string ) {    
@@ -178,6 +186,18 @@ export class PrincipalComponent implements OnInit {
     this.esGenerarKeys = false;
     this.esListarDocumentos = false;
     this.esComprobarDocumentos = true;
+    this.esFirmarDocumentoCompartido = false;
+  }
+  
+  public mostrarModalConfirmarDocumentoCompartido(file: ArchivoDTO) {    
+    this.esLogo = false;
+    this.esListarDocumentosCompartidos = false;
+    this.esFirmarDocumentos = false;
+    this.esGenerarKeys = false;
+    this.esListarDocumentos = false;
+    this.esComprobarDocumentos = false;
+    this.esFirmarDocumentoCompartido = true;
+    this.confirmarArchivoCompartido = file;
   }
 
   public mostrarModalGenerarKeys() {
@@ -187,6 +207,7 @@ export class PrincipalComponent implements OnInit {
     this.esFirmarDocumentos = false;
     this.esListarDocumentos = false;
     this.esComprobarDocumentos = false;
+    this.esFirmarDocumentoCompartido = false;
   }
 
   public mostrarMenu() {
@@ -196,6 +217,7 @@ export class PrincipalComponent implements OnInit {
     this.esFirmarDocumentos = false;
     this.esListarDocumentos = false;
     this.esComprobarDocumentos = false;
+    this.esFirmarDocumentoCompartido = false;
   }
 
   public mostrarModalListarArchivos() {
@@ -208,6 +230,7 @@ export class PrincipalComponent implements OnInit {
         this.esGenerarKeys = false;
         this.esListarDocumentos = true;
         this.esComprobarDocumentos = false;
+        this.esFirmarDocumentoCompartido = false;
       }, 800);
   }
 
@@ -220,6 +243,7 @@ export class PrincipalComponent implements OnInit {
         this.esGenerarKeys = false;
         this.esListarDocumentos = false;
         this.esComprobarDocumentos = false;
+        this.esFirmarDocumentoCompartido = false;
       }, 800);
   }
 
@@ -322,7 +346,57 @@ export class PrincipalComponent implements OnInit {
                 this.mostrarMenu();
               },
               (error) => {
-                this.msjError = "Se presento un error generando las llaves, intenta nuevamente en unos minutos";
+                this.msjError = "Se presento un error firmando el archivo, intenta nuevamente en unos minutos";
+                this.messageService.add({
+                  key: "toastPortal",
+                  severity: "error",
+                  summary: this.msjError,
+                });
+              }
+            );
+      },
+      reject: () => {
+
+      }
+    });
+  }
+
+  public saveFileShare() {    
+    let msj = '¿Está seguro que desea firmar el documento compartido?'
+    this.confirmationService.confirm({
+      message: msj,
+      header: "Firmar Documento Compartido",
+      accept: () => { 
+        let request = new SignedFileShareDTO();
+        request.idFile = this.confirmarArchivoCompartido.id;
+        request.privateKey = this.privateKey;
+        request.idUserSource = this.confirmarArchivoCompartido.idUserSource;
+        this.digitalSignerService
+        .signSharingFile(this.jwt.jwt, request)
+            .subscribe(
+              (res) => {
+                if (res.error 
+                  && res.error.errorCode
+                  && res.error.errorCode === "200"
+                ) {
+                  this.msjError = "El archivo se firmo correctamente";
+                  this.messageService.add({
+                    key: "toastPortal",
+                    severity: "success",
+                    summary: this.msjError,
+                  });
+                } else {
+                  this.msjError = "Se presento un error firmando el archivo, intenta nuevamente en unos minutos";
+                  this.messageService.add({
+                    key: "toastPortal",
+                    severity: "error",
+                    summary: this.msjError,
+                  });
+                }
+                this.mostrarMenu();
+              },
+              (error) => {
+                this.msjError = "Se presento un error firmando el archivo, intenta nuevamente en unos minutos";
                 this.messageService.add({
                   key: "toastPortal",
                   severity: "error",

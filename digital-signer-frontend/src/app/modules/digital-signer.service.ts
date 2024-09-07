@@ -7,6 +7,7 @@ import { SignedFileDTO } from "./principal/dto/firmar-archivo-request.dto";
 import { VerifyFileRequestDTO } from "./principal/dto/verificar-archivo-request.dto";
 import { CompartirUsuarioDTO } from "./principal/dto/compartir-usuario-request.dto";
 import { GoogleSingInRequestDTO } from "./home/dto/google-sing-in-request.dto";
+import { SignedFileShareDTO } from "./principal/dto/firmar-archivo-compartido-request.dto";
 
 @Injectable({
   providedIn: "root",
@@ -51,6 +52,19 @@ export class DigitalSignerService {
       'enctype': 'multipart/form-data'
     });
     return this.http.post<any>(HomeAPIConstant.URL_FIRMAR_ARCHIVO, formData, { headers });
+  }
+
+  public signSharingFile(token : string, request: SignedFileShareDTO): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('idFile', request.idFile.toString());
+    formData.append('privateKeyFile', request.privateKey);
+    formData.append('idUserSource', request.idUserSource.toString());
+    
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'enctype': 'multipart/form-data'
+    });
+    return this.http.post<any>(HomeAPIConstant.URL_FIRMAR_ARCHIVO_COMPARTIDO, formData, { headers });
   }
 
   public listFiles(token : string): Observable<any> {

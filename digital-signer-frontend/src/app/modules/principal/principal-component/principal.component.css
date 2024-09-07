@@ -252,22 +252,38 @@ a.sidebar-link:hover {
   text-align: center;
 }
 
-.img-createUser {
-  display: flex;
-  justify-content: center;
-  align-items: center; 
-  height: 100%; 
-}
-
-.logo-home {
-  width: 620px;
-  height: 620px;
-  object-fit: contain; 
-  margin-bottom: 15%;
-}
-
 .logo-text{
+  margin-top: 10%;
   margin-bottom: 10%; 
   margin-right: 5%;
   font-family: Verdana, sans-serif;
+}
+
+.img-createUser {
+  text-align: center;
+  padding: 20px;
+  width: 70%;
+  margin: auto;
+}
+
+.logo-home {
+  width: 50%;
+  max-width: 100%;
+  margin-bottom: 15px;
+}
+
+.logo-text {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #333;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+@media (max-width: 600px) {
+  .logo-text {
+    font-size: 12px;
+    padding: 0 10px;
+  }
 }
