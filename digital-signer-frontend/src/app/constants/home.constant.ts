@@ -26,4 +26,7 @@ export class HomeAPIConstant {
   static readonly URL_COMPARTIR_FILE: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/shareFile";
 
   static readonly URL_LISTAR_USUARIOS: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/listShareUsers";
+
+  static readonly URL_LISTAR_ARCHIVOS_CON_FIRMAS: string = AppDomainConstant.URI_BASE + HomeAPIConstant.BASE_PATH +  "user/listSharesFilesSigned";
+
 }

@@ -8,6 +8,7 @@ import { VerifyFileRequestDTO } from "./principal/dto/verificar-archivo-request.
 import { CompartirUsuarioDTO } from "./principal/dto/compartir-usuario-request.dto";
 import { GoogleSingInRequestDTO } from "./home/dto/google-sing-in-request.dto";
 import { SignedFileShareDTO } from "./principal/dto/firmar-archivo-compartido-request.dto";
+import { ArchivoDTO } from "./principal/dto/archivo-request.dto";
 
 @Injectable({
   providedIn: "root",
@@ -87,6 +88,13 @@ export class DigitalSignerService {
     });
     return this.http.get<any>(HomeAPIConstant.URL_LISTAR_USUARIOS, { headers });
   }
+
+  public listSharesFilesSigned(token : string, request: VerifyFileRequestDTO): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post<any>(HomeAPIConstant.URL_LISTAR_ARCHIVOS_CON_FIRMAS, request, { headers });
+  }
   
   public verifyFiles(token : string, request: VerifyFileRequestDTO): Observable<any> {
     const headers = new HttpHeaders({
@@ -100,6 +108,8 @@ export class DigitalSignerService {
       'Authorization': `Bearer ${token}`
     });
     return this.http.post<any>(HomeAPIConstant.URL_COMPARTIR_FILE, request, { headers });
+
+
   }
 
 

@@ -37,6 +37,7 @@ export class PrincipalComponent implements OnInit {
 
   public jwt: JWTDTO;
   public archivosUsuario: ArchivoDTO[] = [];
+  public usuariosCompartidosFirmados: UsuarioDTO[] = [];
   public archivoscompartidos: ArchivoDTO[] = [];
   public listaUsuarios: UsuarioDTO[] = [];
   public rowsPerPageOptions: Array<number>;
@@ -55,6 +56,7 @@ export class PrincipalComponent implements OnInit {
   public filteredItemsCompartir: any[] = [];
   public selectedItemUsuarios: any;
   public confirmarArchivoCompartido = new ArchivoDTO();
+  
   
   constructor(
     private router: Router,
@@ -109,6 +111,19 @@ export class PrincipalComponent implements OnInit {
       (res) => {
         this.archivosUsuario = res.listFiles;
         this.obtenerListaArchivosFD();
+      }
+    );
+  }
+
+  public listarUsuariosCompartidosFirmados(event, idFile: number): void {
+    let request = new VerifyFileRequestDTO();
+    request.idFile = idFile;
+    this.digitalSignerService
+    .listSharesFilesSigned(this.jwt.jwt,request)
+    .subscribe(
+      (res) => {
+        this.usuariosCompartidosFirmados = res.listShareUserSigned;
+        this.overlayPanel.toggle(event);
       }
     );
   }

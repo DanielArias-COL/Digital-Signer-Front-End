@@ -10,6 +10,8 @@ import { TableModule } from "primeng/table";
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
 
 @NgModule({
   imports: [
@@ -26,7 +28,9 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     TableModule,
     DropdownModule,
     AutoCompleteModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    AvatarModule,
+    AvatarGroupModule
   ],
   declarations: [PrincipalComponent],
   providers: [

@@ -240,7 +240,7 @@
                   title="Firmar archivo"></i>
                 <i (click)="mostrarModalConfirmarDocumentos('listarDocumentos')" class="lni lni-checkmark-circle font-size-24 pencil ml-3"
                   title="Verificar archivo"></i>
-                <i (click)="op.toggle($event)" 
+                <i (click)="listarUsuariosCompartidosFirmados($event, file.id)" 
                   class="lni lni-share font-size-24 pencil ml-3 detalle icono-lista-documento"
                   title="Compartir documento"></i>  
 
@@ -262,6 +262,28 @@
                     <div class="text-center">
                       <button  (click)="compartirDocumento()" class="btn secondary">Compartir</button>
                     </div>
+
+                    <div>
+                      <span *ngIf="usuariosCompartidosFirmados.length > 0" class="font-medium text-900 block mb-2">Personas que han firmado el archivo</span>
+                      <ul class="list-none p-0 m-0 flex flex-column gap-3">
+                          <li *ngFor="let usuario of usuariosCompartidosFirmados" class="flex align-items-center gap-2">
+                            <p-avatar 
+                              label={{usuario.email.charAt(0)}} 
+                              styleClass="mr-2" 
+                              [style]="{ 'background-color': '#dee9fc', color: '#1a2551' }" 
+                              shape="circle" />
+                              <div>
+                                  <span class="font-medium">{{ usuario.email }}</span>
+                                  <div class="text-sm text-color-secondary">{{ usuario.email }}</div>
+                              </div>
+                              <div class="flex align-items-center gap-2 text-color-secondary ml-auto text-sm">
+                                  <span>{{ usuario.role }}</span>
+                                  <i class="pi pi-angle-down"></i>
+                              </div>
+                          </li>
+                      </ul>
+                  </div>
+
                   </div>    
                 </p-overlayPanel>
               </td>
