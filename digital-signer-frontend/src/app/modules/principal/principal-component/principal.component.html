@@ -17,21 +17,6 @@
       </li>
       <li class="sidebar-item">
         <a class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-          data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
-          <i class="lni lni-protection"></i>
-          <span>Autenticación</span>
-        </a>
-        <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-          <li class="sidebar-item">
-            <a class="sidebar-link">Iniciar sesión</a>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link">Registrarse</a>
-          </li>
-        </ul>
-      </li>
-      <li class="sidebar-item">
-        <a class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
           data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
           <i class="lni lni-pencil-alt"></i>
           <span>Herramientas</span>
@@ -80,7 +65,7 @@
       </li>
     </ul>
     <div class="sidebar-footer">
-      <a class="sidebar-link">
+      <a (click)="cerrarSesion()" class="sidebar-link">
         <i class="lni lni-exit"></i>
         <span>Cerras sesión</span>
       </a>

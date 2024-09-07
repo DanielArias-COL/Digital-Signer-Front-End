@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   public usuario: string = "";
   public clave: string = "";
   public clave_repetida: string = "";
+  public email: string = "";
   public msjError: string = "";
   public initSesion = true;
 
@@ -60,6 +61,10 @@ export class HomeComponent implements OnInit {
     return (!this.usuario || !this.clave);
   }
 
+  public desabilitarCrearCuenta(): boolean {    
+    return (!this.usuario || !this.clave || !this.clave_repetida || !this.email);
+  }
+
   public iniciarSesion(): void {
     if (
       this.usuario &&
@@ -68,6 +73,7 @@ export class HomeComponent implements OnInit {
       let request: SingInRequestDTO = new SingInRequestDTO();
       request.user = this.usuario;
       request.password = this.clave;
+      request.email = this.email;
       this.digitalSignerService
         .iniciarSesion(request)
         .subscribe(
@@ -133,16 +139,17 @@ export class HomeComponent implements OnInit {
     if (
       this.usuario &&
       this.clave &&
-      this.clave_repetida
+      this.clave_repetida &&
+      this.email
     ) {
       if( this.clave == this.clave_repetida){
         let request: SingInRequestDTO = new SingInRequestDTO();
         request.user = this.usuario;
         request.password = this.clave;
+        request.email = this.email;
         
         this.digitalSignerService.createUser(request).subscribe(
-          (res) => {
-            sessionStorage.setItem('auth', JSON.stringify(res))
+          (res) => {            
             this.msjError = "Usuario creado con éxito";
             this.messageService.add({
               key: "toastPortal",
@@ -151,12 +158,11 @@ export class HomeComponent implements OnInit {
             });  
             this.initSesion = true;
           },
-          (error) => {
-            this.msjError = "Error al crear un nuevo usuario";
+          (error) => { 
             this.messageService.add({
               key: "toastPortal",
               severity: "error",
-              summary: this.msjError,
+              summary: error.error.mensaje,
             });
           }
         );

@@ -153,6 +153,18 @@ export class PrincipalComponent implements OnInit {
     );
   }
 
+  public cerrarSesion() {   
+    this.esLogo = false;
+    this.esListarDocumentosCompartidos = false;
+    this.esFirmarDocumentos = false;
+    this.esGenerarKeys = false;
+    this.esListarDocumentos = false;
+    this.esComprobarDocumentos = false;
+    this.esFirmarDocumentoCompartido = false;
+    this.authGoogleService.logout();
+    this.navigateTo("home");
+  }
+
   public mostrarModalFirmarDocumentos( origenInvocacio ?: string ) {   
 
     if (!this.archivosUsuario || this.archivosUsuario.length === 0) {
